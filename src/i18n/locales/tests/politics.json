@@ -1,0 +1,338 @@
+{
+  "ko": {
+    "title": "나의 정치색 테스트",
+    "description": "대한민국 주요 정당과 정치 이슈를 바탕으로, 나의 정치 성향을 알아보세요!",
+    "tags": ["정치", "정당", "성향", "대한민국"],
+    "seoKeywords": "정치 성향 테스트, 대한민국 정당, 정치색, 민주당, 국민의힘, 진보, 보수",
+    "category": "자아",
+    "questions": [
+      {
+        "question": "경제 정책에서 더 중요한 것은?",
+        "options": [
+          "복지 확대 및 분배 강화",
+          "시장 자율과 성장 우선",
+          "기본소득 등 혁신적 실험"
+        ]
+      },
+      {
+        "question": "남북관계에 대한 입장은?",
+        "options": [
+          "대화와 협력 우선",
+          "원칙 있는 대응과 안보 강화",
+          "평화통일 적극 추진"
+        ]
+      },
+      {
+        "question": "청년 정책에서 더 공감 가는 것은?",
+        "options": [
+          "청년 기본소득, 주거 지원 등 직접적 복지",
+          "일자리 창출, 창업 지원 등 성장 기반 마련",
+          "청년 정치 참여 확대, 제도 혁신"
+        ]
+      },
+      {
+        "question": "사회적 약자(노동, 여성, 소수자) 정책에 대한 생각은?",
+        "options": [
+          "적극적 차별 해소와 권리 보장",
+          "기회 평등, 최소한의 개입",
+          "사회적 연대와 혁신적 대안 모색"
+        ]
+      },
+      {
+        "question": "부동산 정책에서 더 선호하는 방향은?",
+        "options": [
+          "공공주택 확대, 임대차 보호 강화",
+          "시장 안정화, 규제 완화",
+          "토지공개념, 기본주택 등 실험적 정책"
+        ]
+      }
+    ],
+    "results": [
+      {
+        "title": "더불어민주당 계열 성향",
+        "desc": "복지, 분배, 사회적 약자 보호 등 진보적 가치를 중시하며, 대화와 협력, 포용의 정치를 선호합니다.",
+        "subDesc": "사회적 연대와 공공성을 강조하며, 약자와 소수자를 보호하고 평화와 협력을 지향합니다.",
+        "recommend": [
+          "더불어민주당, 조국혁신당 등 진보 계열 정당",
+          "공공기관, 복지, 교육 분야",
+          "사회적 연대 활동"
+        ],
+        "hashtags": ["#진보", "#복지", "#포용"]
+      },
+      {
+        "title": "국민의힘 계열 성향",
+        "desc": "시장 자율, 성장, 안보 등 보수적 가치를 중시하며, 실용적이고 원칙 있는 정치를 선호합니다.",
+        "subDesc": "시장경제와 성장을 우선시하며, 법치와 안보를 중시하는 실용적 해결사입니다.",
+        "recommend": [
+          "국민의힘 등 보수 계열 정당",
+          "기업, 창업, 경제 분야",
+          "실용적 정책 연구"
+        ],
+        "hashtags": ["#보수", "#시장", "#안보"]
+      },
+      {
+        "title": "중도/스윙보터(균형형)",
+        "desc": "특정 정당이나 이념에 치우치지 않고, 다양한 가치와 정책을 균형 있게 바라보는 성향입니다.",
+        "subDesc": "다양한 시각을 존중하며, 상황에 따라 유연하게 판단하는 스윙보터 역할을 합니다.",
+        "recommend": [
+          "중도, 무당층, 합리적 선택",
+          "정책비교, 토론, 다양한 경험",
+          "사회적 합의와 협력"
+        ],
+        "hashtags": ["#중도", "#균형", "#스윙보터"]
+      }
+    ]
+  },
+  "en": {
+    "title": "My Political Tendency Test",
+    "description": "Discover your political orientation based on major Korean parties and political issues!",
+    "tags": ["Politics", "Party", "Tendency", "Korea"],
+    "seoKeywords": "political tendency test, Korean politics, political orientation, progressive, conservative",
+    "category": "Self",
+    "questions": [
+      {
+        "question": "What's more important in economic policy?",
+        "options": [
+          "Welfare expansion and distribution strengthening",
+          "Market autonomy and growth priority",
+          "Innovative experiments like basic income"
+        ]
+      },
+      {
+        "question": "Your stance on inter-Korean relations?",
+        "options": [
+          "Dialogue and cooperation priority",
+          "Principled response and security strengthening",
+          "Active pursuit of peaceful unification"
+        ]
+      },
+      {
+        "question": "Which youth policy do you relate to more?",
+        "options": [
+          "Direct welfare like youth basic income, housing support",
+          "Job creation, startup support for growth foundation",
+          "Youth political participation expansion, institutional innovation"
+        ]
+      },
+      {
+        "question": "Your thoughts on policies for social minorities?",
+        "options": [
+          "Active discrimination elimination and rights protection",
+          "Equal opportunity, minimal intervention",
+          "Social solidarity and innovative alternative seeking"
+        ]
+      },
+      {
+        "question": "Preferred direction for real estate policy?",
+        "options": [
+          "Public housing expansion, lease protection strengthening",
+          "Market stabilization, deregulation",
+          "Experimental policies like land publicness, basic housing"
+        ]
+      }
+    ],
+    "results": [
+      {
+        "title": "Democratic Party Tendency",
+        "desc": "Values progressive principles like welfare, distribution, and social minority protection, preferring dialogue, cooperation, and inclusive politics.",
+        "subDesc": "Emphasizes social solidarity and publicness, protects vulnerable and minorities, and is oriented toward peace and cooperation.",
+        "recommend": [
+          "Progressive parties like Democratic Party, Cho Kuk Innovation Party",
+          "Public institutions, welfare, education sectors",
+          "Social solidarity activities"
+        ],
+        "hashtags": ["#Progressive", "#Welfare", "#Inclusion"]
+      },
+      {
+        "title": "People Power Party Tendency",
+        "desc": "Values conservative principles like market autonomy, growth, and security, preferring practical and principled politics.",
+        "subDesc": "Prioritizes market economy and growth, values rule of law and security, and is a practical problem solver.",
+        "recommend": [
+          "Conservative parties like People Power Party",
+          "Business, entrepreneurship, economic sectors",
+          "Practical policy research"
+        ],
+        "hashtags": ["#Conservative", "#Market", "#Security"]
+      },
+      {
+        "title": "Moderate/Swing Voter (Balanced Type)",
+        "desc": "Not biased toward specific parties or ideologies, viewing various values and policies with balance.",
+        "subDesc": "Respects diverse perspectives and judges flexibly according to situations, playing a swing voter role.",
+        "recommend": [
+          "Moderate, independent, rational choice",
+          "Policy comparison, debate, diverse experiences",
+          "Social consensus and cooperation"
+        ],
+        "hashtags": ["#Moderate", "#Balance", "#SwingVoter"]
+      }
+    ]
+  },
+  "ja": {
+    "title": "私の政治色テスト",
+    "description": "韓国の主要政党と政治問題を基に、あなたの政治的傾向を調べてみましょう！",
+    "tags": ["政治", "政党", "傾向", "韓国"],
+    "seoKeywords": "政治傾向テスト、韓国政治、政治的傾向、進歩、保守",
+    "category": "自我",
+    "questions": [
+      {
+        "question": "経済政策でより重要なのは？",
+        "options": [
+          "福祉拡大と分配強化",
+          "市場自律と成長優先",
+          "ベーシックインカムなど革新的実験"
+        ]
+      },
+      {
+        "question": "南北関係についての立場は？",
+        "options": [
+          "対話と協力優先",
+          "原則ある対応と安保強化",
+          "平和統一積極推進"
+        ]
+      },
+      {
+        "question": "青年政策でより共感するのは？",
+        "options": [
+          "青年ベーシックインカム、住居支援など直接的福祉",
+          "雇用創出、創業支援など成長基盤作り",
+          "青年政治参加拡大、制度革新"
+        ]
+      },
+      {
+        "question": "社会的弱者政策についての考えは？",
+        "options": [
+          "積極的差別解消と権利保障",
+          "機会平等、最小限の介入",
+          "社会的連帯と革新的代案模索"
+        ]
+      },
+      {
+        "question": "不動産政策で好む方向は？",
+        "options": [
+          "公共住宅拡大、賃貸借保護強化",
+          "市場安定化、規制緩和",
+          "土地公概念、基本住宅など実験的政策"
+        ]
+      }
+    ],
+    "results": [
+      {
+        "title": "共に民主党系傾向",
+        "desc": "福祉、分配、社会的弱者保護など進歩的価値を重視し、対話と協力、包容の政治を好みます。",
+        "subDesc": "社会的連帯と公共性を強調し、弱者と少数者を保護し、平和と協力を志向します。",
+        "recommend": [
+          "共に民主党、祖国革新党など進歩系政党",
+          "公共機関、福祉、教育分野",
+          "社会的連帯活動"
+        ],
+        "hashtags": ["#進歩", "#福祉", "#包容"]
+      },
+      {
+        "title": "国民の力系傾向",
+        "desc": "市場自律、成長、安保など保守的価値を重視し、実用的で原則ある政治を好みます。",
+        "subDesc": "市場経済と成長を優先し、法治と安保を重視する実用的解決者です。",
+        "recommend": [
+          "国民の力など保守系政党",
+          "企業、創業、経済分野",
+          "実用的政策研究"
+        ],
+        "hashtags": ["#保守", "#市場", "#安保"]
+      },
+      {
+        "title": "中道/スイング有権者（バランス型）",
+        "desc": "特定政党や理念に偏らず、多様な価値と政策をバランスよく見る傾向です。",
+        "subDesc": "多様な視角を尊重し、状況に応じて柔軟に判断するスイング有権者役割をします。",
+        "recommend": [
+          "中道、無党層、合理的選択",
+          "政策比較、討論、多様な経験",
+          "社会的合意と協力"
+        ],
+        "hashtags": ["#中道", "#バランス", "#スイング有権者"]
+      }
+    ]
+  },
+  "zh": {
+    "title": "我的政治倾向测试",
+    "description": "基于韩国主要政党和政治议题，了解您的政治倾向！",
+    "tags": ["政治", "政党", "倾向", "韩国"],
+    "seoKeywords": "政治倾向测试，韩国政治，政治取向，进步，保守",
+    "category": "自我",
+    "questions": [
+      {
+        "question": "在经济政策中更重要的是？",
+        "options": [
+          "扩大福利和加强分配",
+          "市场自主和优先增长",
+          "基本收入等创新实验"
+        ]
+      },
+      {
+        "question": "对南北关系的立场？",
+        "options": [
+          "优先对话与合作",
+          "原则性应对和加强安保",
+          "积极推进和平统一"
+        ]
+      },
+      {
+        "question": "在青年政策中更认同哪个？",
+        "options": [
+          "青年基本收入、住房支援等直接福利",
+          "创造就业、创业支援等增长基础建设",
+          "扩大青年政治参与、制度创新"
+        ]
+      },
+      {
+        "question": "对社会弱势群体政策的想法？",
+        "options": [
+          "积极消除歧视和权利保障",
+          "机会平等，最小限度干预",
+          "寻求社会团结和创新替代方案"
+        ]
+      },
+      {
+        "question": "在房地产政策中更偏好的方向？",
+        "options": [
+          "扩大公共住房，加强租赁保护",
+          "市场稳定化，放松管制",
+          "土地公概念、基本住房等实验性政策"
+        ]
+      }
+    ],
+    "results": [
+      {
+        "title": "共同民主党系倾向",
+        "desc": "重视福利、分配、社会弱势群体保护等进步价值，偏好对话与合作、包容的政治。",
+        "subDesc": "强调社会团结和公共性，保护弱势群体和少数者，面向和平与合作。",
+        "recommend": [
+          "共同民主党、祖国革新党等进步系政党",
+          "公共机构、福利、教育领域",
+          "社会团结活动"
+        ],
+        "hashtags": ["#进步", "#福利", "#包容"]
+      },
+      {
+        "title": "国民力量系倾向",
+        "desc": "重视市场自主、增长、安保等保守价值，偏好实用且有原则的政治。",
+        "subDesc": "优先市场经济和增长，重视法治和安保的实用解决者。",
+        "recommend": [
+          "国民力量等保守系政党",
+          "企业、创业、经济领域",
+          "实用政策研究"
+        ],
+        "hashtags": ["#保守", "#市场", "#安保"]
+      },
+      {
+        "title": "中庸/摇摆选民（均衡型）",
+        "desc": "不偏向特定政党或理念，以均衡的角度看待各种价值和政策的倾向。",
+        "subDesc": "尊重多样化视角，根据情况灵活判断，发挥摇摆选民角色。",
+        "recommend": [
+          "中庸、无党派、理性选择",
+          "政策比较、辩论、多样化经验",
+          "社会共识与合作"
+        ],
+        "hashtags": ["#中庸", "#均衡", "#摇摆选民"]
+      }
+    ]
+  }
+} 

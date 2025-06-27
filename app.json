@@ -1,4 +1,92 @@
 {
-  "name": "testmim-app",
-  "slug": "testmim-app"
+  "expo": {
+    "name": "TestMim App",
+    "slug": "testmim-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "scheme": "testmim-app",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.onmindlab.testmim",
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "infoPlist": {
+        "CFBundleURLTypes": [
+          {
+            "CFBundleURLName": "com.onmindlab.testmim",
+            "CFBundleURLSchemes": ["testmim-app"]
+          },
+          {
+            "CFBundleURLName": "com.onmindlab.testmim.google",
+            "CFBundleURLSchemes": ["274479977819-at0648mvfv01g3saod74t4c6chgqdv9c.apps.googleusercontent.com"]
+          },
+          {
+            "CFBundleURLName": "com.onmindlab.testmim.kakao",
+            "CFBundleURLSchemes": ["kakaoda17dcdbbb81e8ed62e5a61f5fd9842e"]
+          }
+        ],
+        "LSApplicationQueriesSchemes": [
+          "kakaokompassauth",
+          "kakaolink",
+          "kakaotalk"
+        ]
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#4285f4"
+      },
+      "package": "com.onmindlab.testmim",
+      "googleServicesFile": "./google-services.json",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "auth.expo.io"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        },
+        {
+          "action": "VIEW",
+          "data": [
+            {
+              "scheme": "testmim-app"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
+    },
+    "web": {},
+    "plugins": [
+      "expo-web-browser",
+      "expo-apple-authentication",
+      [
+        "@react-native-seoul/kakao-login",
+        {
+          "kakaoAppKey": "da17dcdbbb81e8ed62e5a61f5fd9842e",
+          "kotlinVersion": "1.6.10"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "ee57766a-7337-4a5e-9b7a-0112728297da"
+      }
+    }
+  }
 }

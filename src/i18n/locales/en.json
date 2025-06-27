@@ -1,0 +1,308 @@
+{
+  "common": {
+    "welcome": "Welcome to TestMim",
+    "description": "A collection of tests! Enjoy various psychological tests and fun tests all in one place.",
+    "views": "people participated",
+    "thousand": "K people",
+    "tenThousand": "M people",
+    "loading": "Loading...",
+    "error": "Error",
+    "notice": "Notice"
+  },
+  "header": {
+    "allTests": "All Tests",
+    "createTest": "Create Test",
+    "myTests": "My Tests",
+    "login": "Login",
+    "signup": "Sign Up",
+    "logout": "Logout",
+    "mypage": "My Page",
+    "siteName": "Testmim",
+    "logoAlt": "Testmim Logo",
+    "homePageTitle": "Testmim Homepage"
+  },
+  "categories": {
+    "자아": "🧠 Finding the Real Me",
+    "연애": "💘 Want to Date?",
+    "게임": "🎮 Game Tests",
+    "밈": "🤪 World of Memes"
+  },
+  "badges": {
+    "popular": "Recommended",
+    "new": "NEW"
+  },
+  "meta": {
+    "title": "TestMim | Free Psychological Tests, Personality Tests, MBTI, Fun Test Collection",
+    "description": "TestMim is a site that collects various free psychological tests, personality tests, MBTI, romance, animal, game and other fun tests in one place. Find the test that's right for you right now!",
+    "keywords": "TestMim, psychological test, free test, personality test, MBTI, romance test, animal test, game test, fun test, testmim, personality test, popular test"
+  },
+  "faq": {
+    "what_is_testmim": {
+      "question": "What is TestMim?",
+      "answer": "TestMim is a platform that collects various free psychological tests, personality tests, MBTI, romance, animal, game and other fun tests in one place."
+    },
+    "is_free": {
+      "question": "Are the tests free?",
+      "answer": "Yes, all tests on TestMim are completely free to use."
+    },
+    "what_types": {
+      "question": "What types of tests are available?",
+      "answer": "There are fun tests in various categories including psychological tests, personality tests, MBTI, romance tests, animal tests, game tests, and destiny tests."
+    }
+  },
+  "footer": {
+    "copyright": "© 2025 TestMim (testmim.com)",
+    "company": "Company",
+    "representative": "Representative",
+    "business_number": "Business Registration Number",
+    "contact": "Contact",
+    "address": "Address",
+    "business_type": "Business Type",
+    "business_item": "Business Item",
+    "copyright_notice": "All content on this site is protected by copyright, and unauthorized copying and distribution are prohibited."
+  },
+  "test": {
+    "startTest": "Start Test",
+    "saveError": "An error occurred while saving the result.",
+    "testNotFound": "Test not found."
+  },
+  "testDetail": {
+    "startTest": "Start Test",
+    "views": " participated",
+    "notFound": "Test not found.",
+    "breadcrumb": {
+      "home": "Home"
+    },
+    "back": "Back",
+    "views": "times",
+    "questions": "questions",
+    "startTest": "🚀 Start Test",
+    "infoTitle": "📊 Test Information",
+    "category": "Category:",
+    "questionCount": "Number of Questions:",
+    "resultTypes": "Result Types:",
+    "resultTypesCount": "types",
+    "loading": "Loading...",
+    "notFound": "Test not found.",
+    "backHome": "Go Back",
+    "error": "Unable to load test information."
+  },
+  "results": {
+    "allResults": "View All Results",
+    "recommend": "Recommended",
+    "imageRecommend": "Image Recommendation",
+    "loading": "Loading...",
+    "error": "An error occurred.",
+    "notFound": "Result information not found.",
+    "shareResult": "Share Result",
+    "copyLink": "Copy Link",
+    "copied": "Copied!",
+    "linkCopied": "Link copied!",
+    "tryTest": "Try This Test",
+    "viewResult": "View Result Details",
+    "kakaoShareFailed": "KakaoTalk sharing failed. Link copied!",
+    "kakaoLinkCopied": "Link copied! Please share directly on KakaoTalk.",
+    "shareText": {
+      "myResult": "My Result"
+    },
+    "social": {
+      "kakao": "KakaoTalk",
+      "twitter": "Twitter",
+      "facebook": "Facebook", 
+      "bluesky": "Bluesky"
+    },
+    "hashtags": "test,psychologytest,funtest"
+  },
+  "mypage": {
+    "title": "My Page",
+    "loading": "Loading...",
+    "profileInfo": "Profile Information",
+    "detailInfo": "Detailed Information",
+    "edit": "Edit",
+    "profileImage": "Profile Image",
+    "socialLogin": "Social Login",
+    "loginWith": "Login",
+    "fields": {
+      "nickname": "Nickname",
+      "age": "Age",
+      "gender": "Gender",
+      "joinDate": "Join Date",
+      "bio": "Bio"
+    },
+    "values": {
+      "notSet": "Not Set",
+      "years": "years old",
+      "noInfo": "No Information",
+      "noName": "No Name"
+    },
+    "gender": {
+      "male": "Male",
+      "female": "Female",
+      "other": "Other",
+      "notSet": "Not Set"
+    },
+    "testResults": "My Test Results",
+    "privacy": {
+      "title": "Privacy Protection",
+      "description": "TestMim safely protects users' personal information. Login information is encrypted and stored in Firebase, and we do not collect more personal information than necessary."
+    }
+  },
+  "login": {
+    "title": "Login",
+    "subtitle": "Login easily with your social account.",
+    "back": "Back",
+    "or": "or",
+    "privacyNotice": "Your personal information is not stored when logging in,\nonly minimal authentication is performed for service use.",
+    "privacyBold": "personal information is not stored",
+    "loginSuccess": "Login Successful!",
+    "welcomeUser": ", welcome!",
+    "ok": "OK",
+    "error": "Error",
+    "loginError": "An error occurred during login processing.",
+    "appleLoginError": "An error occurred during Apple login processing."
+  },
+  "onboarding": {
+    "loading": "Loading...",
+    "header": {
+      "title": "Welcome!",
+      "subtitle": "Please enter some simple information\nfor a better experience on TestMim."
+    },
+    "form": {
+      "nickname": {
+        "label": "Nickname",
+        "placeholder": "Enter a cool nickname ✨",
+        "required": "*",
+        "available": "This nickname is available!",
+        "checking": "Checking...",
+        "suggestions": "Suggested nicknames:"
+      },
+      "birthDate": {
+        "label": "Date of Birth",
+        "required": "*"
+      },
+      "gender": {
+        "label": "Gender",
+        "required": "*",
+        "options": {
+          "male": "Male",
+          "female": "Female",
+          "other": "Other"
+        }
+      },
+      "bio": {
+        "label": "Bio",
+        "optional": "(Optional)",
+        "placeholder": "Tell us about yourself briefly",
+        "maxLength": "100"
+      }
+    },
+    "errors": {
+      "nicknameRequired": "Please enter a nickname.",
+      "nicknameDuplicate": "This nickname is already in use.",
+      "birthDateRequired": "Please select your date of birth.",
+      "genderRequired": "Please select your gender.",
+      "bioTooLong": "Bio must be 100 characters or less.",
+      "saveError": "An error occurred while saving information. Please try again."
+    },
+    "button": {
+      "submit": "Get Started ✨",
+      "submitting": "Saving..."
+    },
+    "privacy": {
+      "title": "Privacy Protection",
+      "description": "The information you provide is used for better test recommendations and personalized experiences.\nYou can modify it anytime in My Page, and it is safely protected."
+    }
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "loading": "Loading...",
+    "accessDenied": "Access Denied",
+    "accessDeniedMessage": "This page is accessible only to administrators.",
+    "goHome": "Go Home",
+    "dashboard": {
+      "title": "Admin Dashboard",
+      "subtitle": "TestMim Management System",
+      "sections": {
+        "users": "User Management",
+        "tests": "Test Statistics",
+        "content": "Content Management",
+        "system": "System Settings"
+      }
+    },
+    "users": {
+      "title": "User Management",
+      "total": "Total Users",
+      "loading": "Loading user list...",
+      "empty": "No users found",
+      "table": {
+        "nickname": "Nickname",
+        "email": "Email",
+        "provider": "Sign-up Method",
+        "joinDate": "Join Date",
+        "role": "Role",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "search": "Search users...",
+      "role": {
+        "admin": "Administrator",
+        "user": "User"
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      }
+    },
+    "testStats": {
+      "title": "Test Statistics",
+      "totalTests": "Total Tests",
+      "totalResults": "Total Results",
+      "loading": "Loading statistics...",
+      "empty": "No statistics data",
+      "table": {
+        "testCode": "Test Code",
+        "testName": "Test Name",
+        "participantCount": "Participants",
+        "lastResult": "Last Result",
+        "actions": "Actions"
+      },
+      "viewDetails": "View Details",
+      "exportData": "Export Data"
+    },
+    "navigation": {
+      "dashboard": "Dashboard",
+      "users": "User Management",
+      "testStats": "Test Statistics",
+      "settings": "Settings"
+    }
+  },
+  "home": {
+    "description": "Enjoy various free psychological tests, personality tests, MBTI and other fun tests!",
+    "footer": {
+      "copyright": "© 2024 TestMim. All rights reserved."
+    }
+  },
+  "testExecution": {
+    "exit": "Exit",
+    "loading": "Loading test...",
+    "notFound": "Test not found.",
+    "previousQuestion": "← Previous Question"
+  },
+  "testResult": {
+    "loading": "Calculating results...",
+    "notFound": "Unable to load results.",
+    "homeButton": "Back to Home",
+    "watermark": "testmim.com",
+    "shareResult": "📤 Share Result",
+    "shareLoading": "Preparing to share...",
+    "retakeTest": "🔄 Retake Test",
+    "goHome": "🏠 Home",
+    "shareTitle": "Share",
+    "shareCancel": "Cancel",
+    "shareCopy": "Copy",
+    "shareText": "Text is ready. Please share in your desired app.",
+    "shareNotAvailable": "Sharing feature is not available on this device.",
+    "shareError": "Sharing failed. Please try again.",
+    "recommend": "💡 Recommendations"
+  }
+} 

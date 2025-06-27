@@ -1,0 +1,460 @@
+{
+  "ko": {
+    "title": "나와 어울리는 롤 라인은?",
+    "description": "당신의 성향에 맞는 리그 오브 레전드 라인을 찾아보세요!",
+    "tags": ["LOL", "게임", "라인", "MBTI", "포지션테스트"],
+    "seoKeywords": "롤 라인 테스트, 롤 라인 추천, LOL 라인 종류",
+    "category": "게임",
+    "questions": [
+      {
+        "question": "게임에서 선호하는 플레이 스타일은?",
+        "options": [
+          "팀을 이끄는 리더 역할",
+          "안정적으로 성장하는 캐리",
+          "팀원을 지원하는 서포터",
+          "적극적으로 로밍하며 영향력 발휘"
+        ]
+      },
+      {
+        "question": "전투에서 선호하는 포지션은?",
+        "options": [
+          "최전선에서 이니시에이팅",
+          "뒤에서 안전하게 딜링",
+          "아군 옆에서 보호와 지원",
+          "측면에서 기습과 암살"
+        ]
+      },
+      {
+        "question": "게임 초반에 중요하게 생각하는 것은?",
+        "options": [
+          "라인전 우위 확보",
+          "안정적인 파밍과 성장",
+          "정글 오브젝트 확보",
+          "다른 라인 도움주기"
+        ]
+      },
+      {
+        "question": "팀파이트에서 우선순위는?",
+        "options": [
+          "적 캐리 보호 해제",
+          "최대한 많은 딜량 넣기",
+          "아군 캐리 보호하기",
+          "적 백라인 진입하기"
+        ]
+      },
+      {
+        "question": "선호하는 챔피언 유형은?",
+        "options": [
+          "탱커와 이니시에이터",
+          "원거리 딜러와 메이지",
+          "서포터와 유틸리티",
+          "암살자와 브루저"
+        ]
+      }
+    ],
+    "results": [
+      {
+        "type": "TOP",
+        "title": "🛡️ 탑라인 – 단단한 외로운 전사",
+        "desc": "자신만의 길을 묵묵히 가는 강인한 당신!",
+        "subDesc": "상대의 압박 속에서도 꿋꿋하게 라인을 유지하는 타입",
+        "hashtags": ["#1인분", "#탑솔", "#강한멘탈"],
+        "recommend": [
+          "탱커 챔피언 - 팀을 보호하는 든든한 벽",
+          "브루저 챔피언 - 딜과 탱을 겸비한 만능형",
+          "스플릿 푸시 - 혼자서 상대팀을 견제"
+        ]
+      },
+      {
+        "type": "JUNGLE",
+        "title": "🌲 정글 – 설계자이자 판을 흔드는 자",
+        "desc": "맵 전체를 움직이는 전략가!",
+        "subDesc": "초반 설계부터 오브젝트 컨트롤까지, 다 당신 손에 달렸다",
+        "hashtags": ["#정글러", "#갱킹", "#설계자"],
+        "recommend": [
+          "탱커 정글러 - 팀을 위한 이니시에이팅",
+          "캐리 정글러 - 직접 게임을 캐리",
+          "유틸리티 정글러 - 팀원 지원에 특화"
+        ]
+      },
+      {
+        "type": "MID",
+        "title": "⚔️ 미드라인 – 전략의 중심",
+        "desc": "맵을 관통하는 존재감, 로밍과 화력 모두를 책임지는 중심축!",
+        "subDesc": "판을 읽고 움직이는 리더 타입",
+        "hashtags": ["#중심", "#로밍", "#미드라이너"],
+        "recommend": [
+          "암살자 챔피언 - 적 캐리를 제거하는 역할",
+          "메이지 챔피언 - 강력한 마법 딜러",
+          "유틸리티 챔피언 - 팀을 위한 서포팅"
+        ]
+      },
+      {
+        "type": "ADC",
+        "title": "🎯 원딜 – 후반 캐리의 아이콘",
+        "desc": "포지셔닝 하나로 게임을 뒤집는 딜링 머신!",
+        "subDesc": "한타에선 당신의 딜량이 곧 희망",
+        "hashtags": ["#원딜", "#포지셔닝", "#캐리력"],
+        "recommend": [
+          "크리티컬 ADC - 후반 강력한 화력",
+          "유틸리티 ADC - 팀을 위한 서포팅",
+          "초반 강세 ADC - 라인전 우위 확보"
+        ]
+      },
+      {
+        "type": "SUPPORT",
+        "title": "💉 서포터 – 팀의 숨은 MVP",
+        "desc": "시야와 힐, CC로 팀을 완성시키는 헌신형 플레이어!",
+        "subDesc": "당신은 팀워크의 핵심",
+        "hashtags": ["#서폿", "#시야장인", "#팀플"],
+        "recommend": [
+          "탱커 서포터 - 아군을 보호하는 방패",
+          "힐러 서포터 - 지속적인 회복 지원",
+          "유틸리티 서포터 - 다양한 스킬로 팀 지원"
+        ]
+      }
+    ]
+  },
+  "en": {
+    "title": "Which LoL Lane Suits Me?",
+    "description": "Find the League of Legends lane that matches your personality!",
+    "tags": ["LOL", "Game", "Lane", "MBTI", "Position Test"],
+    "seoKeywords": "LoL lane test, LoL lane recommendation, LOL lane types",
+    "category": "게임",
+    "questions": [
+      {
+        "question": "What play style do you prefer in games?",
+        "options": [
+          "Leader role guiding the team",
+          "Carry that grows stably", 
+          "Supporter who supports team members",
+          "Actively roaming and exerting influence"
+        ]
+      },
+      {
+        "question": "What position do you prefer in combat?",
+        "options": [
+          "Initiating from the front line",
+          "Dealing damage safely from behind",
+          "Protection and support next to allies",
+          "Surprise and assassination from the side"
+        ]
+      },
+      {
+        "question": "What do you consider important in early game?",
+        "options": [
+          "Securing lane advantage",
+          "Stable farming and growth",
+          "Securing jungle objectives",
+          "Helping other lanes"
+        ]
+      },
+      {
+        "question": "What's your priority in team fights?",
+        "options": [
+          "Disabling enemy carry protection",
+          "Dealing maximum damage output",
+          "Protecting allied carries",
+          "Entering enemy backline"
+        ]
+      },
+      {
+        "question": "What champion type do you prefer?",
+        "options": [
+          "Tanks and initiators",
+          "Ranged dealers and mages",
+          "Supporters and utility",
+          "Assassins and bruisers"
+        ]
+      }
+    ],
+    "results": [
+      {
+        "type": "TOP",
+        "title": "🛡️ Top Lane – The Solid Lonely Warrior",
+        "desc": "Strong you who silently walks your own path!",
+        "subDesc": "Type that steadfastly maintains the lane even under opponent's pressure",
+        "hashtags": ["#SelfSufficient", "#TopSolo", "#StrongMentality"],
+        "recommend": [
+          "Tank Champions - Reliable wall protecting the team",
+          "Bruiser Champions - Versatile type with both damage and tankiness", 
+          "Split Push - Pressuring enemy team alone"
+        ]
+      },
+      {
+        "type": "JUNGLE",
+        "title": "🌲 Jungle – Designer and Game Changer",
+        "desc": "Strategist who moves the entire map!",
+        "subDesc": "From early game planning to objective control, it's all in your hands",
+        "hashtags": ["#Jungler", "#Ganking", "#Designer"],
+        "recommend": [
+          "Tank Junglers - Initiating for the team",
+          "Carry Junglers - Directly carrying the game",
+          "Utility Junglers - Specialized in supporting teammates"
+        ]
+      },
+      {
+        "type": "MID",
+        "title": "⚔️ Mid Lane – Center of Strategy",
+        "desc": "Presence that penetrates the map, the central axis responsible for both roaming and firepower!",
+        "subDesc": "Leader type who reads and moves the board",
+        "hashtags": ["#Center", "#Roaming", "#Midlaner"],
+        "recommend": [
+          "Assassin Champions - Role of eliminating enemy carries",
+          "Mage Champions - Powerful magical dealers",
+          "Utility Champions - Supporting for the team"
+        ]
+      },
+      {
+        "type": "ADC",
+        "title": "🎯 ADC – Icon of Late Game Carry",
+        "desc": "Dealing machine that flips the game with positioning alone!",
+        "subDesc": "In team fights, your damage output is hope itself",
+        "hashtags": ["#ADC", "#Positioning", "#CarryPower"],
+        "recommend": [
+          "Critical ADC - Powerful late-game firepower",
+          "Utility ADC - Supporting for the team",
+          "Early Game ADC - Securing lane advantage"
+        ]
+      },
+      {
+        "type": "SUPPORT",
+        "title": "💉 Support – Team's Hidden MVP",
+        "desc": "Dedicated player who completes the team with vision, heals, and CC!",
+        "subDesc": "You are the core of teamwork",
+        "hashtags": ["#Support", "#VisionMaster", "#Teamplay"],
+        "recommend": [
+          "Tank Supports - Shield protecting allies",
+          "Healer Supports - Continuous recovery support",
+          "Utility Supports - Team support with various skills"
+        ]
+      }
+    ]
+  },
+  "zh": {
+    "title": "适合我的英雄联盟路线是？",
+    "description": "找到符合你性格的英雄联盟路线！",
+    "questions": [
+      {
+        "question": "在游戏中偏好的游戏风格是？",
+        "options": [
+          "引领团队的领导角色",
+          "稳定成长的核心",
+          "支援队员的辅助",
+          "积极游走发挥影响力"
+        ]
+      },
+      {
+        "question": "在战斗中偏好的位置是？",
+        "options": [
+          "在最前线开团",
+          "在后方安全输出",
+          "在队友旁边保护和支援",
+          "从侧面突袭和暗杀"
+        ]
+      },
+      {
+        "question": "游戏前期重视的是？",
+        "options": [
+          "确保对线优势",
+          "稳定补兵和成长",
+          "确保野区目标",
+          "帮助其他路线"
+        ]
+      },
+      {
+        "question": "团战中的优先级是？",
+        "options": [
+          "解除敌方核心保护",
+          "输出尽可能多的伤害",
+          "保护我方核心",
+          "切入敌方后排"
+        ]
+      },
+      {
+        "question": "偏好的英雄类型是？",
+        "options": [
+          "坦克和开团者",
+          "远程输出和法师",
+          "辅助和功能性",
+          "刺客和战士"
+        ]
+      }
+    ],
+    "results": [
+      {
+        "type": "TOP",
+        "title": "🛡️ 上路 – 坚固的孤独战士",
+        "desc": "默默走着自己道路的坚强的你！",
+        "subDesc": "即使在对手的压迫下也坚定地维持线路的类型",
+        "hashtags": ["#一人份", "#上路独行", "#强大心态"],
+        "recommend": [
+          "坦克英雄 - 保护团队的可靠屏障",
+          "战士英雄 - 兼具输出和坦度的万能型",
+          "分推 - 一个人牵制敌方团队"
+        ]
+      },
+      {
+        "type": "JUNGLE",
+        "title": "🌲 打野 – 设计师兼搅动局势者",
+        "desc": "移动整个地图的战略家！",
+        "subDesc": "从前期设计到目标控制，一切都在你手中",
+        "hashtags": ["#打野", "#抓人", "#设计师"],
+        "recommend": [
+          "坦克打野 - 为团队开团",
+          "输出打野 - 直接carry游戏",
+          "功能性打野 - 专门支援队友"
+        ]
+      },
+      {
+        "type": "MID",
+        "title": "⚔️ 中路 – 战略中心",
+        "desc": "穿透地图的存在感，承担游走和火力的中心轴！",
+        "subDesc": "读懂局势并行动的领导者类型",
+        "hashtags": ["#中心", "#游走", "#中路玩家"],
+        "recommend": [
+          "刺客英雄 - 消除敌方核心的角色",
+          "法师英雄 - 强大的魔法输出",
+          "功能性英雄 - 为团队提供支援"
+        ]
+      },
+      {
+        "type": "ADC",
+        "title": "🎯 射手 – 后期carry的图标",
+        "desc": "仅凭走位就能翻转游戏的输出机器！",
+        "subDesc": "团战中你的伤害量就是希望",
+        "hashtags": ["#射手", "#走位", "#carry能力"],
+        "recommend": [
+          "暴击ADC - 后期强大的火力",
+          "功能性ADC - 为团队提供支援",
+          "前期强势ADC - 确保对线优势"
+        ]
+      },
+      {
+        "type": "SUPPORT",
+        "title": "💉 辅助 – 团队的隐藏MVP",
+        "desc": "用视野、治疗、控制完善团队的奉献型玩家！",
+        "subDesc": "你是团队合作的核心",
+        "hashtags": ["#辅助", "#视野大师", "#团队配合"],
+        "recommend": [
+          "坦克辅助 - 保护队友的盾牌",
+          "治疗辅助 - 持续的恢复支援",
+          "功能性辅助 - 用各种技能支援团队"
+        ]
+      }
+    ]
+  },
+  "ja": {
+    "title": "私に似合うLoLレーンは？",
+    "description": "あなたの性格に合うリーグ・オブ・レジェンドのレーンを見つけてみましょう！",
+    "questions": [
+      {
+        "question": "ゲームで好むプレイスタイルは？",
+        "options": [
+          "チームを率いるリーダー役割",
+          "安定して成長するキャリー",
+          "チームメンバーを支援するサポーター",
+          "積極的にローミングして影響力を発揮"
+        ]
+      },
+      {
+        "question": "戦闘で好むポジションは？",
+        "options": [
+          "最前線でイニシエート",
+          "後ろから安全にディーリング",
+          "味方の隣で保護とサポート",
+          "側面から奇襲と暗殺"
+        ]
+      },
+      {
+        "question": "ゲーム序盤で重要に思うことは？",
+        "options": [
+          "レーン戦の優位確保",
+          "安定したファーミングと成長",
+          "ジャングルオブジェクト確保",
+          "他のレーンの手助け"
+        ]
+      },
+      {
+        "question": "チームファイトでの優先順位は？",
+        "options": [
+          "敵キャリーの保護を解除",
+          "できるだけ多くのダメージを出す",
+          "味方キャリーを保護",
+          "敵バックラインに侵入"
+        ]
+      },
+      {
+        "question": "好むチャンピオンタイプは？",
+        "options": [
+          "タンクとイニシエーター",
+          "遠距離ディーラーとメイジ",
+          "サポーターとユーティリティ",
+          "アサシンとブルーザー"
+        ]
+      }
+    ],
+    "results": [
+      {
+        "type": "TOP",
+        "title": "🛡️ トップレーン – 堅固な孤独な戦士",
+        "desc": "自分の道を黙々と歩む強靭なあなた！",
+        "subDesc": "相手のプレッシャーの中でも頑固にレーンを維持するタイプ",
+        "hashtags": ["#一人前", "#トップソロ", "#強いメンタル"],
+        "recommend": [
+          "タンクチャンピオン - チームを守る頼もしい壁",
+          "ブルーザーチャンピオン - ダメージとタンクを兼備した万能型",
+          "スプリットプッシュ - 一人で相手チームを牽制"
+        ]
+      },
+      {
+        "type": "JUNGLE",
+        "title": "🌲 ジャングル – 設計者かつ盤面を揺らす者",
+        "desc": "マップ全体を動かす戦略家！",
+        "subDesc": "序盤設計からオブジェクトコントロールまで、すべてあなたの手にかかっている",
+        "hashtags": ["#ジャングラー", "#ガンク", "#設計者"],
+        "recommend": [
+          "タンクジャングラー - チームのためのイニシエート",
+          "キャリージャングラー - 直接ゲームをキャリー",
+          "ユーティリティジャングラー - チームメンバー支援に特化"
+        ]
+      },
+      {
+        "type": "MID",
+        "title": "⚔️ ミッドレーン – 戦略の中心",
+        "desc": "マップを貫通する存在感、ローミングと火力両方を担う中心軸！",
+        "subDesc": "盤面を読んで動くリーダータイプ",
+        "hashtags": ["#中心", "#ローミング", "#ミッドレーナー"],
+        "recommend": [
+          "アサシンチャンピオン - 敵キャリーを除去する役割",
+          "メイジチャンピオン - 強力な魔法ディーラー",
+          "ユーティリティチャンピオン - チームのためのサポート"
+        ]
+      },
+      {
+        "type": "ADC",
+        "title": "🎯 ADC – 後半キャリーのアイコン",
+        "desc": "ポジショニング一つでゲームをひっくり返すディーリングマシン！",
+        "subDesc": "チームファイトではあなたのダメージ量が希望そのもの",
+        "hashtags": ["#ADC", "#ポジショニング", "#キャリー力"],
+        "recommend": [
+          "クリティカルADC - 後半強力な火力",
+          "ユーティリティADC - チームのためのサポート",
+          "序盤強勢ADC - レーン戦優位確保"
+        ]
+      },
+      {
+        "type": "SUPPORT",
+        "title": "💉 サポート – チームの隠れたMVP",
+        "desc": "視界とヒール、CCでチームを完成させる献身型プレイヤー！",
+        "subDesc": "あなたはチームワークの核心",
+        "hashtags": ["#サポート", "#視界職人", "#チームプレイ"],
+        "recommend": [
+          "タンクサポート - 味方を守る盾",
+          "ヒーラーサポート - 継続的な回復サポート",
+          "ユーティリティサポート - 様々なスキルでチーム支援"
+        ]
+      }
+    ]
+  }
+} 

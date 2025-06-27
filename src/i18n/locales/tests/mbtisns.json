@@ -1,0 +1,856 @@
+{
+  "ko": {
+    "title": "SNS에서 당신은 어떤 유형일까? (MBTI Ver.2)",
+    "description": "당신이 SNS 계정이라면 어떤 스타일일까요? 피드 꾸미기, 댓글 반응, 좋아요 패턴까지! SNS 속 당신의 MBTI 유형을 찾아보세요.",
+    "tags": ["MBTI", "SNS", "심리"],
+    "seoKeywords": "MBTI, SNS 분석, SNS 스타일",
+    "category": "자아",
+    "questions": [
+      {
+        "question": "1. 당신의 피드에는 어떤 게시물이 많을까?",
+        "options": [
+          "여행, 파티, 사람들과 함께 찍은 사진",
+          "풍경이나 소소한 일상 사진",
+          "관찰한 디테일이나 분석글",
+          "상상력 자극하는 밈과 창작물"
+        ]
+      },
+      {
+        "question": "2. 친구가 감정적인 글을 올렸을 때 당신은?",
+        "options": [
+          "괜찮아? 바로 DM 보냄",
+          "상황을 먼저 파악하고 신중히 행동",
+          "댓글로 짧게 반응해줌",
+          "혼자 속으로 걱정하고 끝"
+        ]
+      },
+      {
+        "question": "3. SNS에서 콘텐츠를 올릴 때 당신은?",
+        "options": [
+          "정해둔 시간에 맞춰 규칙적으로 올림",
+          "기분 내킬 때마다 자유롭게 올림",
+          "테마와 분위기를 세심히 맞춤",
+          "즉흥적이고 감각적인 포스트가 많음"
+        ]
+      },
+      {
+        "question": "4. 좋아요/댓글을 누르는 기준은?",
+        "options": [
+          "재밌거나 감동적이면 바로 반응",
+          "내가 아는 사람 위주로만 반응",
+          "정보성/실용성 위주로 반응",
+          "감정이입/공감 위주로 반응"
+        ]
+      },
+      {
+        "question": "5. SNS에서 가장 신경 쓰는 것은?",
+        "options": [
+          "팔로워와의 소통/반응",
+          "내 피드의 일관성/분위기",
+          "새로운 트렌드/밈 찾기",
+          "실제 내 삶과의 연결감"
+        ]
+      },
+      {
+        "question": "6. DM(쪽지) 알림이 왔을 때 당신은?",
+        "options": [
+          "바로 답장, 대화 이어가기",
+          "읽고 나서 천천히 답장",
+          "상황에 따라 다름, 즉흥적",
+          "상대방의 의도/맥락을 분석"
+        ]
+      },
+      {
+        "question": "7. SNS에서 나를 가장 잘 설명하는 말은?",
+        "options": [
+          "밈/유행에 민감한 트렌드세터",
+          "감정공감/위로가 특기",
+          "정보/분석/정리왕",
+          "계획적이고 꾸준한 운영자"
+        ]
+      },
+      {
+        "question": "8. SNS에서 가장 싫은 상황은?",
+        "options": [
+          "내가 올린 글에 아무 반응 없음",
+          "내 사생활이 너무 노출됨",
+          "논리 없는 비난/악플",
+          "감정적 폭주/싸움"
+        ]
+      },
+      {
+        "question": "9. SNS에서 친구를 추가할 때 기준은?",
+        "options": [
+          "서로 소통이 잘 되는 사람",
+          "비슷한 관심사/취향",
+          "새로운 자극/다양성",
+          "오래 알고 지낸 신뢰감"
+        ]
+      },
+      {
+        "question": "10. SNS에서 내 피드백 스타일은?",
+        "options": [
+          "짧고 직설적인 피드백",
+          "공감/위로 위주로 피드백",
+          "상황별로 다르게 반응",
+          "분석/정리해서 피드백"
+        ]
+      },
+      {
+        "question": "11. SNS에서 이벤트/챌린지 참여는?",
+        "options": [
+          "계획 세워 미리 준비",
+          "즉흥적으로 참여",
+          "친구들과 함께 참여",
+          "혼자서 조용히 관찰"
+        ]
+      },
+      {
+        "question": "12. SNS에서 나의 DM/댓글 빈도는?",
+        "options": [
+          "자주, 여러 사람과 활발히 소통",
+          "필요할 때만, 신중하게",
+          "상황 따라 다름, 즉흥적",
+          "분석/정보 공유 위주"
+        ]
+      }
+    ],
+    "results": [
+      {
+        "title": "🌙 감성 기록러 INFP",
+        "desc": "감정과 생각을 조용히 기록하는 몽환적 감성 SNS러!",
+        "subDesc": "혼자서 피드를 가꾸고, 긴 글에 내면을 담는 스타일입니다.",
+        "hashtags": ["#감성글귀", "#혼잣말계정", "#몽환피드"]
+      },
+      {
+        "title": "🔥 밈 장인 ENTP",
+        "desc": "이야깃거리와 밈으로 세상을 흔드는 SNS 개척자!",
+        "subDesc": "댓글에 댓글을 달고, 매번 화제를 일으키는 밈 크리에이터입니다.",
+        "hashtags": ["#밈러", "#반응속도 1등", "#SNS유머"]
+      },
+      {
+        "title": "🎉 에너지 뿜뿜 ENFP",
+        "desc": "밝고 긍정적인 에너지로 피드를 가득 채우는 SNS 인싸!",
+        "subDesc": "다양한 챌린지와 이벤트에 적극적으로 참여합니다.",
+        "hashtags": ["#인싸", "#챌린지왕", "#긍정에너지"]
+      },
+      {
+        "title": "🦄 영감 수집가 INFJ",
+        "desc": "깊은 통찰과 영감을 SNS에 담아내는 조용한 크리에이터!",
+        "subDesc": "감성적이면서도 의미 있는 콘텐츠를 선호합니다.",
+        "hashtags": ["#영감수집", "#의미추구", "#조용한SNS"]
+      },
+      {
+        "title": "🧠 전략가 INTJ",
+        "desc": "분석과 전략으로 피드를 설계하는 SNS 마스터!",
+        "subDesc": "계획적이고 체계적인 SNS 운영을 즐깁니다.",
+        "hashtags": ["#전략적", "#분석러", "#계획형"]
+      },
+      {
+        "title": "👑 SNS 리더 ENTJ",
+        "desc": "SNS에서도 리더십을 발휘하는 추진력 갑!",
+        "subDesc": "이슈를 주도하고, 팔로워를 이끄는 스타일입니다.",
+        "hashtags": ["#리더십", "#이슈메이커", "#추진력"]
+      },
+      {
+        "title": "🍀 따뜻한 기록자 ISFJ",
+        "desc": "소소한 일상과 따뜻한 순간을 기록하는 힐링 SNS러!",
+        "subDesc": "친구와 가족, 소중한 사람들과의 추억을 중시합니다.",
+        "hashtags": ["#힐링피드", "#추억저장", "#따뜻함"]
+      },
+      {
+        "title": "💬 소통왕 ESFJ",
+        "desc": "댓글, DM, 좋아요로 소통을 즐기는 SNS 커뮤니케이터!",
+        "subDesc": "팔로워와의 관계를 소중히 여기며, 활발한 피드백을 남깁니다.",
+        "hashtags": ["#소통왕", "#피드백장인", "#관계중시"]
+      },
+      {
+        "title": "📚 정석러 ISTJ",
+        "desc": "정직하고 신중하게 피드를 관리하는 SNS 정석러!",
+        "subDesc": "규칙적이고 일관된 콘텐츠를 선호합니다.",
+        "hashtags": ["#정석운영", "#신중함", "#일관성"]
+      },
+      {
+        "title": "🗂️ 운영자 ESTJ",
+        "desc": "SNS를 체계적으로 관리하는 운영자형!",
+        "subDesc": "계획과 실행, 효율을 중시하는 스타일입니다.",
+        "hashtags": ["#운영자", "#효율중시", "#계획실행"]
+      },
+      {
+        "title": "🌸 감성 아티스트 ISFP",
+        "desc": "감각적이고 자유로운 피드를 꾸미는 예술가형!",
+        "subDesc": "사진, 음악, 영상 등 다양한 감성 콘텐츠를 즐깁니다.",
+        "hashtags": ["#감성아트", "#자유로운피드", "#예술가"]
+      },
+      {
+        "title": "🎈 피드의 분위기메이커 ESFP",
+        "desc": "밝고 유쾌한 분위기로 피드를 채우는 SNS 엔터테이너!",
+        "subDesc": "이벤트, 밈, 챌린지에 적극적으로 참여합니다.",
+        "hashtags": ["#분위기메이커", "#이벤트참여", "#유쾌함"]
+      },
+      {
+        "title": "🔧 실험가 ISTP",
+        "desc": "새로운 기능, 다양한 포맷을 실험하는 SNS 탐구가!",
+        "subDesc": "기술, 도구, 트렌드에 관심이 많습니다.",
+        "hashtags": ["#실험정신", "#도구덕후", "#트렌드체크"]
+      },
+      {
+        "title": "🚀 액션러 ESTP",
+        "desc": "즉흥적이고 에너지 넘치는 SNS 액션러!",
+        "subDesc": "새로운 시도와 도전을 즐깁니다.",
+        "hashtags": ["#즉흥참여", "#도전정신", "#에너지"]
+      },
+      {
+        "title": "🧩 분석가 INTP",
+        "desc": "호기심과 분석력으로 SNS를 탐구하는 지적 유형!",
+        "subDesc": "정보, 밈, 트렌드의 원리를 파헤치는 것을 즐깁니다.",
+        "hashtags": ["#분석러", "#지적호기심", "#트렌드탐구"]
+      },
+      {
+        "title": "🌟 영감 리더 ENFJ",
+        "desc": "팔로워에게 긍정적 영향과 영감을 주는 SNS 리더!",
+        "subDesc": "공감과 소통, 의미 있는 콘텐츠를 추구합니다.",
+        "hashtags": ["#영감리더", "#공감소통", "#의미추구"]
+      }
+    ]
+  },
+  "en": {
+    "title": "What's Your SNS Type? (MBTI Ver.2)",
+    "description": "What style would you be if you were a SNS account? From feed styling to comment reactions and like patterns! Find your MBTI type in SNS.",
+    "tags": ["MBTI", "SNS", "Psychology"],
+    "seoKeywords": "MBTI, SNS analysis, SNS style",
+    "category": "자아",
+    "questions": [
+      {
+        "question": "1. What kind of posts are most common on your feed?",
+        "options": [
+          "Travel, parties, photos with people",
+          "Landscape or small daily life photos",
+          "Observed details or analytical posts",
+          "Imagination-stimulating memes and creations"
+        ]
+      },
+      {
+        "question": "2. When a friend posts an emotional post, you:",
+        "options": [
+          "Are you okay? Send DM immediately",
+          "First understand the situation and act carefully",
+          "React briefly in comments",
+          "Worry inside and that's it"
+        ]
+      },
+      {
+        "question": "3. When posting content on SNS, you:",
+        "options": [
+          "Post regularly at set times",
+          "Post freely whenever you feel like it",
+          "Carefully match theme and mood",
+          "Mostly spontaneous and sensual posts"
+        ]
+      },
+      {
+        "question": "4. Your criteria for likes/comments?",
+        "options": [
+          "React immediately if fun or touching",
+          "Only react to people I know",
+          "Focus on informative/practical content",
+          "Focus on emotional connection/empathy"
+        ]
+      },
+      {
+        "question": "5. What do you care about most on SNS?",
+        "options": [
+          "Communication/reactions with followers",
+          "Consistency/mood of my feed",
+          "Finding new trends/memes",
+          "Connection with my real life"
+        ]
+      },
+      {
+        "question": "6. When you get a DM notification, you:",
+        "options": [
+          "Reply immediately, continue conversation",
+          "Read and reply slowly",
+          "Depends on situation, spontaneous",
+          "Analyze the other's intention/context"
+        ]
+      },
+      {
+        "question": "7. The phrase that best describes me on SNS is:",
+        "options": [
+          "Trendsetter sensitive to memes/trends",
+          "Specializes in emotional empathy/comfort",
+          "Information/analysis/organization king",
+          "Planned and consistent operator"
+        ]
+      },
+      {
+        "question": "8. The situation you hate most on SNS is:",
+        "options": [
+          "No reactions to my posts",
+          "My privacy being too exposed",
+          "Illogical criticism/hate comments",
+          "Emotional outbursts/fights"
+        ]
+      },
+      {
+        "question": "9. SNS에서 친구를 추가할 때 기준은?",
+        "options": [
+          "People who communicate well with each other",
+          "Similar interests/tastes",
+          "New stimulation/diversity",
+          "Long-term trust and familiarity"
+        ]
+      },
+      {
+        "question": "10. SNS에서 내 피드백 스타일은?",
+        "options": [
+          "Short and direct feedback",
+          "Empathy/comfort-focused feedback",
+          "React differently by situation",
+          "Analyze/organize and give feedback"
+        ]
+      },
+      {
+        "question": "11. SNS에서 이벤트/챌린지 참여는?",
+        "options": [
+          "Plan and prepare in advance",
+          "Participate spontaneously",
+          "Participate with friends",
+          "Observe quietly alone"
+        ]
+      },
+      {
+        "question": "12. My DM/comment frequency on SNS:",
+        "options": [
+          "Often, actively communicate with many people",
+          "Only when necessary, carefully",
+          "Depends on situation, spontaneous",
+          "Focus on analysis/information sharing"
+        ]
+      }
+    ],
+    "results": [
+      {
+        "title": "🌙 Emotional Recorder INFP",
+        "desc": "Dreamy emotional SNS user who quietly records feelings and thoughts!",
+        "subDesc": "Style that tends to their feed alone and puts inner thoughts in long posts.",
+        "hashtags": ["#EmotionalQuotes", "#PersonalAccount", "#DreamyFeed"]
+      },
+      {
+        "title": "🔥 Meme Master ENTP",
+        "desc": "SNS pioneer who shakes the world with stories and memes!",
+        "subDesc": "Meme creator who comments on comments and creates topics every time.",
+        "hashtags": ["#MemeExpert", "#QuickResponse", "#SNSHumor"]
+      },
+      {
+        "title": "🎉 Energy Burst ENFP",
+        "desc": "SNS insider who fills feed with bright and positive energy!",
+        "subDesc": "Actively participates in various challenges and events.",
+        "hashtags": ["#Popular", "#ChallengeKing", "#PositiveEnergy"]
+      },
+      {
+        "title": "🦄 Inspiration Collector INFJ",
+        "desc": "Quiet creator who captures deep insights and inspiration on SNS!",
+        "subDesc": "Prefers emotional yet meaningful content.",
+        "hashtags": ["#InspirationCollector", "#MeaningSeeker", "#QuietSNS"]
+      },
+      {
+        "title": "🧠 Strategist INTJ",
+        "desc": "SNS master who designs feeds with analysis and strategy!",
+        "subDesc": "Enjoys planned and systematic SNS management.",
+        "hashtags": ["#Strategic", "#Analyzer", "#Planner"]
+      },
+      {
+        "title": "👑 SNS Leader ENTJ",
+        "desc": "Ultimate drive who demonstrates leadership even on SNS!",
+        "subDesc": "Style that leads issues and guides followers.",
+        "hashtags": ["#Leadership", "#IssueMaker", "#Drive"]
+      },
+      {
+        "title": "🍀 Warm Recorder ISFJ",
+        "desc": "Healing SNS user who records small daily life and warm moments!",
+        "subDesc": "Values memories with friends, family, and precious people.",
+        "hashtags": ["#HealingFeed", "#MemorySaver", "#Warmth"]
+      },
+      {
+        "title": "💬 Communication King ESFJ",
+        "desc": "SNS communicator who enjoys communication through comments, DMs, and likes!",
+        "subDesc": "Values relationships with followers and leaves active feedback.",
+        "hashtags": ["#CommunicationKing", "#FeedbackMaster", "#RelationshipFocused"]
+      },
+      {
+        "title": "📚 Orthodox User ISTJ",
+        "desc": "Orthodox SNS user who manages feed honestly and carefully!",
+        "subDesc": "Prefers regular and consistent content.",
+        "hashtags": ["#OrthodoxManagement", "#Careful", "#Consistent"]
+      },
+      {
+        "title": "🗂️ Manager ESTJ",
+        "desc": "Manager type who systematically manages SNS!",
+        "subDesc": "Style that values planning, execution, and efficiency.",
+        "hashtags": ["#Manager", "#EfficiencyFocused", "#PlanExecution"]
+      },
+      {
+        "title": "🌸 Emotional Artist ISFP",
+        "desc": "Artist type who decorates sensual and free feeds!",
+        "subDesc": "Enjoys various emotional content like photos, music, and videos.",
+        "hashtags": ["#EmotionalArt", "#FreeFeed", "#Artist"]
+      },
+      {
+        "title": "🎈 Feed Mood Maker ESFP",
+        "desc": "SNS entertainer who fills feed with bright and cheerful atmosphere!",
+        "subDesc": "Actively participates in events, memes, and challenges.",
+        "hashtags": ["#MoodMaker", "#EventParticipation", "#Cheerful"]
+      },
+      {
+        "title": "🔧 Experimenter ISTP",
+        "desc": "SNS explorer who experiments with new features and various formats!",
+        "subDesc": "Very interested in technology, tools, and trends.",
+        "hashtags": ["#ExperimentalSpirit", "#ToolEnthusiast", "#TrendChecker"]
+      },
+      {
+        "title": "🚀 Action User ESTP",
+        "desc": "Spontaneous and energetic SNS action user!",
+        "subDesc": "Enjoys new attempts and challenges.",
+        "hashtags": ["#SpontaneousParticipation", "#ChallengeSpirit", "#Energy"]
+      },
+      {
+        "title": "🧩 Analyst INTP",
+        "desc": "Intellectual type who explores SNS with curiosity and analytical skills!",
+        "subDesc": "Enjoys digging into the principles of information, memes, and trends.",
+        "hashtags": ["#Analyzer", "#IntellectualCuriosity", "#TrendExplorer"]
+      },
+      {
+        "title": "🌟 Inspiration Leader ENFJ",
+        "desc": "SNS leader who gives positive influence and inspiration to followers!",
+        "subDesc": "Pursues empathy, communication, and meaningful content.",
+        "hashtags": ["#InspirationLeader", "#EmpathyCommunication", "#MeaningPursuit"]
+      }
+    ]
+  },
+  "zh": {
+    "title": "你在社交媒体上是什么类型？(MBTI Ver.2)",
+    "description": "如果你是一个社交媒体账号，会是什么风格？从动态装饰到评论反应、点赞模式！找到你在社交媒体中的MBTI类型。",
+    "questions": [
+      {
+        "question": "1. 你的动态中什么类型的帖子最多？",
+        "options": [
+          "旅行、聚会、与人合照",
+          "风景或日常小事照片",
+          "观察到的细节或分析文章",
+          "激发想象力的表情包和创作"
+        ]
+      },
+      {
+        "question": "2. 朋友发情感帖时，你会？",
+        "options": [
+          "还好吗？立即发私信",
+          "先了解情况后谨慎行动",
+          "简短评论回应",
+          "心里担心就结束了"
+        ]
+      },
+      {
+        "question": "3. 在社交媒体发布内容时，你会？",
+        "options": [
+          "按既定时间规律发布",
+          "想发的时候自由发布",
+          "精心搭配主题和氛围",
+          "多为即兴感性的帖子"
+        ]
+      },
+      {
+        "question": "4. 点赞/评论的标准是？",
+        "options": [
+          "有趣或感动就立即反应",
+          "只对认识的人反应",
+          "侧重信息性/实用性内容",
+          "侧重情感共鸣/共情"
+        ]
+      },
+      {
+        "question": "5. 在社交媒体上最在意什么？",
+        "options": [
+          "与粉丝的沟通/反应",
+          "我动态的一致性/氛围",
+          "寻找新趋势/表情包",
+          "与真实生活的联系感"
+        ]
+      },
+      {
+        "question": "6. 收到私信通知时，你会？",
+        "options": [
+          "立即回复，继续对话",
+          "看完后慢慢回复",
+          "视情况而定，即兴",
+          "分析对方的意图/语境"
+        ]
+      },
+      {
+        "question": "7. 在社交媒体上最能形容我的话是？",
+        "options": [
+          "对表情包/潮流敏感的潮流引领者",
+          "擅长情感共鸣/安慰",
+          "信息/分析/整理王",
+          "有计划且持续的运营者"
+        ]
+      },
+      {
+        "question": "8. 在社交媒体上最讨厌的情况是？",
+        "options": [
+          "我发的帖子没有任何反应",
+          "我的隐私过度暴露",
+          "没有逻辑的批评/恶评",
+          "情绪爆发/争吵"
+        ]
+      },
+      {
+        "question": "9. 在社交媒体添加朋友的标准？",
+        "options": [
+          "彼此沟通良好的人",
+          "相似的兴趣/品味",
+          "新的刺激/多样性",
+          "长期相知的信任感"
+        ]
+      },
+      {
+        "question": "10. 我在社交媒体的反馈风格是？",
+        "options": [
+          "简短直接的反馈",
+          "以共情/安慰为主的反馈",
+          "根据情况不同反应",
+          "分析/整理后给反馈"
+        ]
+      },
+      {
+        "question": "11. 社交媒体活动/挑战参与？",
+        "options": [
+          "制定计划提前准备",
+          "即兴参与",
+          "与朋友一起参与",
+          "独自安静观察"
+        ]
+      },
+      {
+        "question": "12. 我在社交媒体的私信/评论频率？",
+        "options": [
+          "经常，与很多人积极沟通",
+          "只在必要时，谨慎地",
+          "视情况而定，即兴",
+          "以分析/信息分享为主"
+        ]
+      }
+    ],
+    "results": [
+      {
+        "title": "🌙 感性记录者 INFP",
+        "desc": "安静记录情感和想法的梦幻感性SNS用户！",
+        "subDesc": "独自经营动态，在长文中融入内心的风格。",
+        "hashtags": ["#感性文案", "#自言自语账号", "#梦幻动态"]
+      },
+      {
+        "title": "🔥 表情包大师 ENTP",
+        "desc": "用话题和表情包撼动世界的SNS开拓者！",
+        "subDesc": "在评论上评论，每次都制造话题的表情包创作者。",
+        "hashtags": ["#表情包达人", "#反应速度第一", "#SNS幽默"]
+      },
+      {
+        "title": "🎉 能量爆棚 ENFP",
+        "desc": "用明亮积极的能量填满动态的SNS人气王！",
+        "subDesc": "积极参与各种挑战和活动。",
+        "hashtags": ["#人气王", "#挑战之王", "#正能量"]
+      },
+      {
+        "title": "🦄 灵感收集者 INFJ",
+        "desc": "将深刻洞察和灵感融入SNS的安静创作者！",
+        "subDesc": "偏好感性而有意义的内容。",
+        "hashtags": ["#灵感收集", "#意义追求", "#安静SNS"]
+      },
+      {
+        "title": "🧠 战略家 INTJ",
+        "desc": "用分析和战略设计动态的SNS大师！",
+        "subDesc": "享受有计划和系统化的SNS运营。",
+        "hashtags": ["#战略性", "#分析师", "#计划型"]
+      },
+      {
+        "title": "👑 SNS领导者 ENTJ",
+        "desc": "在SNS中也发挥领导力的推动力第一！",
+        "subDesc": "主导议题，引领粉丝的风格。",
+        "hashtags": ["#领导力", "#议题制造者", "#推动力"]
+      },
+      {
+        "title": "🍀 温暖记录者 ISFJ",
+        "desc": "记录平凡日常和温暖瞬间的治愈系SNS用户！",
+        "subDesc": "重视与朋友、家人、珍贵的人的回忆。",
+        "hashtags": ["#治愈动态", "#回忆保存", "#温暖"]
+      },
+      {
+        "title": "💬 沟通王 ESFJ",
+        "desc": "通过评论、私信、点赞享受沟通的SNS交流者！",
+        "subDesc": "重视与粉丝的关系，留下积极的反馈。",
+        "hashtags": ["#沟通王", "#反馈大师", "#重视关系"]
+      },
+      {
+        "title": "📚 正统派 ISTJ",
+        "desc": "诚实谨慎管理动态的SNS正统派！",
+        "subDesc": "偏好规律一致的内容。",
+        "hashtags": ["#正统运营", "#谨慎", "#一致性"]
+      },
+      {
+        "title": "🗂️ 运营者 ESTJ",
+        "desc": "系统化管理SNS的运营者型！",
+        "subDesc": "重视计划、执行、效率的风格。",
+        "hashtags": ["#运营者", "#重视效率", "#计划执行"]
+      },
+      {
+        "title": "🌸 感性艺术家 ISFP",
+        "desc": "装饰感性自由动态的艺术家型！",
+        "subDesc": "享受照片、音乐、视频等各种感性内容。",
+        "hashtags": ["#感性艺术", "#自由动态", "#艺术家"]
+      },
+      {
+        "title": "🎈 动态氛围制造者 ESFP",
+        "desc": "用明亮愉快的氛围填充动态的SNS娱乐者！",
+        "subDesc": "积极参与活动、表情包、挑战。",
+        "hashtags": ["#氛围制造者", "#活动参与", "#愉快"]
+      },
+      {
+        "title": "🔧 实验家 ISTP",
+        "desc": "实验新功能、各种格式的SNS探索者！",
+        "subDesc": "对技术、工具、趋势很有兴趣。",
+        "hashtags": ["#实验精神", "#工具达人", "#趋势检查"]
+      },
+      {
+        "title": "🚀 行动派 ESTP",
+        "desc": "即兴且充满活力的SNS行动派！",
+        "subDesc": "享受新尝试和挑战。",
+        "hashtags": ["#即兴参与", "#挑战精神", "#活力"]
+      },
+      {
+        "title": "🧩 分析家 INTP",
+        "desc": "用好奇心和分析力探索SNS的知识型！",
+        "subDesc": "享受挖掘信息、表情包、趋势的原理。",
+        "hashtags": ["#分析师", "#知识好奇心", "#趋势探索"]
+      },
+      {
+        "title": "🌟 灵感领导者 ENFJ",
+        "desc": "给粉丝积极影响和灵感的SNS领导者！",
+        "subDesc": "追求共情、沟通、有意义的内容。",
+        "hashtags": ["#灵感领导者", "#共情沟通", "#意义追求"]
+      }
+    ]
+  },
+  "ja": {
+    "title": "SNSでのあなたはどんなタイプ？ (MBTI Ver.2)",
+    "description": "もしあなたがSNSアカウントなら、どんなスタイル？フィード装飾からコメント反応、いいねパターンまで！SNSでのあなたのMBTIタイプを見つけてみてください。",
+    "questions": [
+      {
+        "question": "1. あなたのフィードにはどんな投稿が多い？",
+        "options": [
+          "旅行、パーティー、人との写真",
+          "風景や些細な日常写真",
+          "観察したディテールや分析文",
+          "想像力を刺激するミームと創作物"
+        ]
+      },
+      {
+        "question": "2. 友達が感情的な投稿をした時、あなたは？",
+        "options": [
+          "大丈夫？すぐDMを送る",
+          "状況をまず把握して慎重に行動",
+          "コメントで短く反応する",
+          "一人で心配して終わり"
+        ]
+      },
+      {
+        "question": "3. SNSでコンテンツを投稿する時、あなたは？",
+        "options": [
+          "決めた時間に合わせて規則的に投稿",
+          "気分が向いた時に自由に投稿",
+          "テーマと雰囲気を細かく合わせる",
+          "即興的で感覚的な投稿が多い"
+        ]
+      },
+      {
+        "question": "4. いいね/コメントをする基準は？",
+        "options": [
+          "面白いか感動的ならすぐ反応",
+          "知ってる人中心にだけ反応",
+          "情報性/実用性中心に反応",
+          "感情移入/共感中心に反応"
+        ]
+      },
+      {
+        "question": "5. SNSで最も気にすることは？",
+        "options": [
+          "フォロワーとのコミュニケーション/反応",
+          "自分のフィードの一貫性/雰囲気",
+          "新しいトレンド/ミーム探し",
+          "実際の自分の生活との繋がり感"
+        ]
+      },
+      {
+        "question": "6. DM（メッセージ）通知が来た時、あなたは？",
+        "options": [
+          "すぐ返信、会話を続ける",
+          "読んでからゆっくり返信",
+          "状況によって違う、即興的",
+          "相手の意図/文脈を分析"
+        ]
+      },
+      {
+        "question": "7. SNSで私を最もよく説明する言葉は？",
+        "options": [
+          "ミーム/流行に敏感なトレンドセッター",
+          "感情共感/慰めが得意",
+          "情報/分析/整理王",
+          "計画的で継続的な運営者"
+        ]
+      },
+      {
+        "question": "8. SNSで最も嫌な状況は？",
+        "options": [
+          "自分の投稿に何も反応がない",
+          "自分のプライバシーが過度に露出",
+          "論理のない批判/悪口",
+          "感情的な暴走/喧嘩"
+        ]
+      },
+      {
+        "question": "9. SNSで友達を追加する時の基準は？",
+        "options": [
+          "お互いコミュニケーションが取れる人",
+          "似た関心事/好み",
+          "新しい刺激/多様性",
+          "長く知り合った信頼感"
+        ]
+      },
+      {
+        "question": "10. SNSでの私のフィードバックスタイルは？",
+        "options": [
+          "短くて直接的なフィードバック",
+          "共感/慰め中心のフィードバック",
+          "状況別に違う反応",
+          "分析/整理してフィードバック"
+        ]
+      },
+      {
+        "question": "11. SNSでのイベント/チャレンジ参加は？",
+        "options": [
+          "計画を立てて事前準備",
+          "即興的に参加",
+          "友達と一緒に参加",
+          "一人で静かに観察"
+        ]
+      },
+      {
+        "question": "12. SNSでの私のDM/コメント頻度は？",
+        "options": [
+          "よく、多くの人と活発にコミュニケーション",
+          "必要な時だけ、慎重に",
+          "状況によって違う、即興的",
+          "分析/情報共有中心"
+        ]
+      }
+    ],
+    "results": [
+      {
+        "title": "🌙 感性記録者 INFP",
+        "desc": "感情と思考を静かに記録する幻想的感性SNSユーザー！",
+        "subDesc": "一人でフィードを育て、長文に内面を込めるスタイルです。",
+        "hashtags": ["#感性文句", "#独り言アカウント", "#幻想フィード"]
+      },
+      {
+        "title": "🔥 ミーム職人 ENTP",
+        "desc": "話題とミームで世界を揺らすSNS開拓者！",
+        "subDesc": "コメントにコメントを付け、毎回話題を起こすミームクリエイター。",
+        "hashtags": ["#ミーマー", "#反応速度1位", "#SNSユーモア"]
+      },
+      {
+        "title": "🎉 エネルギー爆発 ENFP",
+        "desc": "明るく積極的なエネルギーでフィードを満たすSNS人気者！",
+        "subDesc": "様々なチャレンジやイベントに積極的に参加します。",
+        "hashtags": ["#人気者", "#チャレンジ王", "#ポジティブエネルギー"]
+      },
+      {
+        "title": "🦄 インスピレーション収集家 INFJ",
+        "desc": "深い洞察とインスピレーションをSNSに込める静かなクリエイター！",
+        "subDesc": "感性的でありながら意味のあるコンテンツを好みます。",
+        "hashtags": ["#インスピレーション収集", "#意味追求", "#静かなSNS"]
+      },
+      {
+        "title": "🧠 戦略家 INTJ",
+        "desc": "分析と戦略でフィードを設計するSNSマスター！",
+        "subDesc": "計画的で体系的なSNS運営を楽しみます。",
+        "hashtags": ["#戦略的", "#分析者", "#計画型"]
+      },
+      {
+        "title": "👑 SNSリーダー ENTJ",
+        "desc": "SNSでもリーダーシップを発揮する推進力抜群！",
+        "subDesc": "イシューを主導し、フォロワーを導くスタイルです。",
+        "hashtags": ["#リーダーシップ", "#イシューメーカー", "#推進力"]
+      },
+      {
+        "title": "🍀 温かい記録者 ISFJ",
+        "desc": "些細な日常と温かい瞬間を記録するヒーリングSNSユーザー！",
+        "subDesc": "友達や家族、大切な人たちとの思い出を重視します。",
+        "hashtags": ["#ヒーリングフィード", "#思い出保存", "#温かさ"]
+      },
+      {
+        "title": "💬 コミュニケーション王 ESFJ",
+        "desc": "コメント、DM、いいねでコミュニケーションを楽しむSNSコミュニケーター！",
+        "subDesc": "フォロワーとの関係を大切にし、活発なフィードバックを残します。",
+        "hashtags": ["#コミュニケーション王", "#フィードバック職人", "#関係重視"]
+      },
+      {
+        "title": "📚 正統派 ISTJ",
+        "desc": "正直で慎重にフィードを管理するSNS正統派！",
+        "subDesc": "規則的で一貫したコンテンツを好みます。",
+        "hashtags": ["#正統運営", "#慎重さ", "#一貫性"]
+      },
+      {
+        "title": "🗂️ 運営者 ESTJ",
+        "desc": "SNSを体系的に管理する運営者型！",
+        "subDesc": "計画と實行、効率を重視するスタイルです。",
+        "hashtags": ["#運営者", "#効率重視", "#計画実行"]
+      },
+      {
+        "title": "🌸 感性アーティスト ISFP",
+        "desc": "感覚的で自由なフィードを飾るアーティスト型！",
+        "subDesc": "写真、音楽、映像など様々な感性コンテンツを楽しみます。",
+        "hashtags": ["#感性アート", "#自由なフィード", "#アーティスト"]
+      },
+      {
+        "title": "🎈 フィードの雰囲気メーカー ESFP",
+        "desc": "明るく愉快な雰囲気でフィードを満たすSNSエンターテイナー！",
+        "subDesc": "イベント、ミーム、チャレンジに積極的に参加します。",
+        "hashtags": ["#雰囲気メーカー", "#イベント参加", "#愉快さ"]
+      },
+      {
+        "title": "🔧 実験家 ISTP",
+        "desc": "新機能、様々なフォーマットを実験するSNS探求家！",
+        "subDesc": "技術、ツール、トレンドに興味が多いです。",
+        "hashtags": ["#実験精神", "#ツールオタク", "#トレンドチェック"]
+      },
+      {
+        "title": "🚀 アクション派 ESTP",
+        "desc": "即興的でエネルギー溢れるSNSアクション派！",
+        "subDesc": "新しい試みと挑戦を楽しみます。",
+        "hashtags": ["#即興参加", "#挑戦精神", "#エネルギー"]
+      },
+      {
+        "title": "🧩 分析家 INTP",
+        "desc": "好奇心と分析力でSNSを探求する知的タイプ！",
+        "subDesc": "情報、ミーム、トレンドの原理を掘り下げることを楽しみます。",
+        "hashtags": ["#分析者", "#知的好奇心", "#トレンド探求"]
+      },
+      {
+        "title": "🌟 インスピレーションリーダー ENFJ",
+        "desc": "フォロワーに積極的影響とインスピレーションを与えるSNSリーダー！",
+        "subDesc": "共感とコミュニケーション、意味のあるコンテンツを追求します。",
+        "hashtags": ["#インスピレーションリーダー", "#共感コミュニケーション", "#意味追求"]
+      }
+    ]
+  }
+} 

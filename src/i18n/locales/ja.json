@@ -1,0 +1,244 @@
+{
+  "common": {
+    "welcome": "TestMimへようこそ",
+    "description": "テストの集合地！様々な心理テストや面白いテストを一箇所で楽しめます。",
+    "views": "人が参加",
+    "thousand": "千人",
+    "tenThousand": "万人",
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "notice": "お知らせ"
+  },
+  "header": {
+    "allTests": "全てのテスト",
+    "createTest": "テスト作成",
+    "myTests": "私のテスト",
+    "login": "ログイン",
+    "signup": "サインアップ",
+    "logout": "ログアウト",
+    "mypage": "マイページ",
+    "siteName": "Testmim",
+    "logoAlt": "Testmim ロゴ",
+    "homePageTitle": "Testmim ホームページ"
+  },
+  "categories": {
+    "자아": "🧠 本当の自分を見つける",
+    "연애": "💘 恋愛したい？",
+    "게임": "🎮 ゲームテスト",
+    "밈": "🤪 ミームの世界"
+  },
+  "badges": {
+    "popular": "おすすめ",
+    "new": "NEW"
+  },
+  "meta": {
+    "title": "TestMim | 無料心理テスト、性格テスト、MBTI、面白いテスト集",
+    "description": "TestMimは様々な無料心理テスト、性格テスト、MBTI、恋愛、動物、ゲームなどの面白いテストを一箇所に集めたサイトです。今すぐあなたに合ったテストを見つけてください！",
+    "keywords": "TestMim, 心理テスト, 無料テスト, 性格テスト, MBTI, 恋愛テスト, 動物テスト, ゲームテスト, 面白いテスト, testmim, 性格テスト, 人気テスト"
+  },
+  "faq": {
+    "what_is_testmim": {
+      "question": "TestMimとは何ですか？",
+      "answer": "TestMimは様々な無料心理テスト、性格テスト、MBTI、恋愛、動物、ゲームなどの面白いテストを一箇所に集めたプラットフォームです。"
+    },
+    "is_free": {
+      "question": "テストは無料ですか？",
+      "answer": "はい、TestMimのすべてのテストは完全に無料でご利用いただけます。"
+    },
+    "what_types": {
+      "question": "どのような種類のテストがありますか？",
+      "answer": "心理テスト、性格テスト、MBTI、恋愛テスト、動物テスト、ゲームテスト、運命テストなど、様々なカテゴリの面白いテストがあります。"
+    }
+  },
+  "footer": {
+    "copyright": "© 2025 TestMim (testmim.com)",
+    "company": "会社",
+    "representative": "代表者",
+    "business_number": "事業者登録番号",
+    "contact": "連絡先",
+    "address": "住所",
+    "business_type": "事業種別",
+    "business_item": "事業項目",
+    "copyright_notice": "このサイトのすべてのコンテンツは著作権で保護されており、無断複製・配布を禁じます。"
+  },
+  "test": {
+    "startTest": "テスト開始",
+    "saveError": "結果の保存中にエラーが発生しました。",
+    "testNotFound": "テストが見つかりません。"
+  },
+  "testDetail": {
+    "startTest": "テスト開始",
+    "views": "参加",
+    "notFound": "テストが見つかりません。",
+    "breadcrumb": {
+      "home": "ホーム"
+    },
+    "back": "戻る",
+    "views": "回",
+    "questions": "個の質問",
+    "startTest": "🚀 テスト開始",
+    "infoTitle": "📊 テスト情報",
+    "category": "カテゴリ:",
+    "questionCount": "質問数:",
+    "resultTypes": "結果タイプ:",
+    "resultTypesCount": "種類",
+    "loading": "読み込み中...",
+    "backHome": "戻る",
+    "error": "テスト情報を読み込めません。"
+  },
+  "results": {
+    "allResults": "すべての結果を見る",
+    "recommend": "おすすめ",
+    "imageRecommend": "画像おすすめ",
+    "loading": "読み込み中...",
+    "error": "エラーが発生しました。",
+    "notFound": "結果情報が見つかりません。",
+    "shareResult": "結果をシェア",
+    "copyLink": "リンクをコピー",
+    "copied": "コピーしました！",
+    "linkCopied": "リンクがコピーされました！",
+    "tryTest": "私もテストしてみる",
+    "viewResult": "結果詳細を見る",
+    "kakaoShareFailed": "KakaoTalkシェアに失敗しました。リンクがコピーされました！",
+    "kakaoLinkCopied": "リンクがコピーされました！KakaoTalkで直接シェアしてください。",
+    "shareText": {
+      "myResult": "私の結果"
+    },
+    "social": {
+      "kakao": "KakaoTalk",
+      "twitter": "Twitter",
+      "facebook": "Facebook",
+      "bluesky": "Bluesky"
+    },
+    "hashtags": "テスト,心理テスト,面白いテスト"
+  },
+  "mypage": {
+    "title": "マイページ",
+    "loading": "読み込み中...",
+    "profileInfo": "プロフィール情報",
+    "detailInfo": "詳細情報",
+    "edit": "編集",
+    "profileImage": "プロフィール画像",
+    "socialLogin": "ソーシャルログイン",
+    "loginWith": "ログイン",
+    "fields": {
+      "nickname": "ニックネーム",
+      "age": "年齢",
+      "gender": "性別",
+      "joinDate": "登録日",
+      "bio": "自己紹介"
+    },
+    "values": {
+      "notSet": "未設定",
+      "years": "歳",
+      "noInfo": "情報なし",
+      "noName": "名前なし"
+    },
+    "gender": {
+      "male": "男性",
+      "female": "女性",
+      "other": "その他",
+      "notSet": "未設定"
+    },
+    "testResults": "私のテスト結果",
+    "privacy": {
+      "title": "個人情報保護",
+      "description": "TestMimはユーザーの個人情報を安全に保護します。ログイン情報はFirebaseに暗号化されて保存され、必要以上の個人情報は収集しません。"
+    }
+  },
+  "login": {
+    "title": "ログイン",
+    "subtitle": "ソーシャルアカウントで簡単にログインしてください。",
+    "back": "戻る",
+    "or": "または",
+    "privacyNotice": "ログイン時に個人情報は保存されず、\nサービス利用のための最小限の認証のみ実行されます。",
+    "privacyBold": "個人情報は保存されず",
+    "loginSuccess": "ログイン成功！",
+    "welcomeUser": "さん、ようこそ！",
+    "ok": "OK",
+    "error": "エラー",
+    "loginError": "ログイン処理中にエラーが発生しました。",
+    "appleLoginError": "Appleログイン処理中にエラーが発生しました。"
+  },
+  "onboarding": {
+    "loading": "読み込み中...",
+    "header": {
+      "title": "ようこそ！",
+      "subtitle": "TestMimでより良い体験のために\n簡単な情報を入力してください。"
+    },
+    "form": {
+      "nickname": {
+        "label": "ニックネーム",
+        "placeholder": "素敵なニックネームを入力してください ✨",
+        "required": "*",
+        "available": "使用可能なニックネームです！",
+        "checking": "確認中...",
+        "suggestions": "おすすめニックネーム:"
+      },
+      "birthDate": {
+        "label": "生年月日",
+        "required": "*"
+      },
+      "gender": {
+        "label": "性別",
+        "required": "*",
+        "options": {
+          "male": "男性",
+          "female": "女性",
+          "other": "その他"
+        }
+      },
+      "bio": {
+        "label": "自己紹介",
+        "optional": "（任意）",
+        "placeholder": "簡単に自己紹介をしてください",
+        "maxLength": "100"
+      }
+    },
+    "errors": {
+      "nicknameRequired": "ニックネームを入力してください。",
+      "nicknameDuplicate": "既に使用されているニックネームです。",
+      "birthDateRequired": "生年月日を選択してください。",
+      "genderRequired": "性別を選択してください。",
+      "bioTooLong": "自己紹介は100文字以下にしてください。",
+      "saveError": "情報の保存中にエラーが発生しました。もう一度お試しください。"
+    },
+    "button": {
+      "submit": "開始する ✨",
+      "submitting": "保存中..."
+    },
+    "privacy": {
+      "title": "個人情報保護",
+      "description": "入力された情報は、より良いテスト推奨と個人化された体験のために使用されます。\nマイページでいつでも修正でき、安全に保護されます。"
+    }
+  },
+  "home": {
+    "description": "様々な無料心理テスト、性格テスト、MBTIなどの面白いテストをお楽しみください！",
+    "footer": {
+      "copyright": "© 2024 TestMim. All rights reserved."
+    }
+  },
+  "testExecution": {
+    "exit": "終了",
+    "loading": "テストを読み込んでいます...",
+    "notFound": "テストが見つかりません。",
+    "previousQuestion": "← 前の質問"
+  },
+  "testResult": {
+    "loading": "結果を計算中...",
+    "notFound": "結果を読み込めません。",
+    "homeButton": "ホームに戻る",
+    "watermark": "testmim.com",
+    "shareResult": "📤 結果をシェア",
+    "shareLoading": "シェア準備中...",
+    "retakeTest": "🔄 再テスト",
+    "goHome": "🏠 ホーム",
+    "shareTitle": "シェア",
+    "shareCancel": "キャンセル",
+    "shareCopy": "コピー",
+    "shareText": "テキストが準備されました。お好きなアプリでシェアしてください。",
+    "shareNotAvailable": "この端末ではシェア機能を使用できません。",
+    "shareError": "シェアに失敗しました。再試行してください。",
+    "recommend": "💡 おすすめ"
+  }
+} 
