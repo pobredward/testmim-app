@@ -9,7 +9,16 @@ export default function App() {
   const [i18nReady, setI18nReady] = useState(false);
 
   useEffect(() => {
-    const initializeI18n = async () => {
+    const initializeApp = async () => {
+      // 카카오 SDK 초기화
+      try {
+        const { KakaoAuthService } = await import('./src/services/kakaoAuth');
+        await KakaoAuthService.initialize();
+        console.log('✅ 카카오 SDK 초기화 완료');
+      } catch (error) {
+        console.warn('⚠️ 카카오 SDK 초기화 실패:', error);
+      }
+
       // i18n이 이미 초기화되었는지 확인
       if (i18n.isInitialized) {
         console.log('✅ i18n already initialized');
@@ -31,7 +40,7 @@ export default function App() {
       checkI18n();
     };
 
-    initializeI18n();
+    initializeApp();
   }, []);
 
   if (!i18nReady) {
