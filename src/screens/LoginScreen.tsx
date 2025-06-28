@@ -16,6 +16,12 @@ import { useTranslation } from 'react-i18next';
 import { getPrimaryProviders, getSecondaryProviders, SocialProvider } from '../data/socialAuth';
 import { SocialAuthService, AuthUser } from '../services/socialAuth';
 import AppleSignInButton from '../components/AppleSignInButton';
+import { 
+  KakaoLoginButton, 
+  GoogleLoginButton, 
+  PrimaryLoginButton, 
+  IconLoginButton 
+} from '../components/SocialLoginButtons';
 import * as AppleAuthentication from 'expo-apple-authentication';
 
 const { width } = Dimensions.get('window');
@@ -23,6 +29,7 @@ const { width } = Dimensions.get('window');
 type RootStackParamList = {
   Home: undefined;
   Login: undefined;
+  Onboarding: undefined;
   TestDetail: { testCode: string };
 };
 
@@ -39,7 +46,13 @@ export default function LoginScreen({ onLoginSuccess }: LoginScreenProps) {
   const [appleSignInAvailable, setAppleSignInAvailable] = useState(false);
 
   const primaryProviders = getPrimaryProviders();
-  const secondaryProviders = getSecondaryProviders();
+  const secondaryProviders = getSecondaryProviders().filter(provider => {
+    // iOS에서는 Apple 공식 컴포넌트를 사용하므로 secondary에서 애플 제외
+    if (Platform.OS === 'ios' && provider.key === 'apple') {
+      return false;
+    }
+    return true;
+  });
 
   // Apple 로그인 가능 여부 확인
   React.useEffect(() => {
@@ -61,19 +74,39 @@ export default function LoginScreen({ onLoginSuccess }: LoginScreenProps) {
       const user = await SocialAuthService.signInWithProvider(provider.key);
       
       if (user) {
-        Alert.alert(
-          t('login.loginSuccess'),
-          `${user.displayName || user.email}${t('login.welcomeUser')}`,
-          [
-            {
-              text: t('login.ok'),
-              onPress: () => {
-                onLoginSuccess?.(user);
-                navigation.goBack();
+        const userName = user.nickname || user.displayName || user.email || '사용자';
+        
+        // 온보딩 완료 여부에 따라 다른 페이지로 이동
+        if (user.onboardingCompleted === false) {
+          Alert.alert(
+            t('login.loginSuccess'),
+            '로그인이 완료되었습니다! 프로필을 설정해주세요.',
+            [
+              {
+                text: t('login.ok'),
+                onPress: () => {
+                  onLoginSuccess?.(user);
+                  navigation.navigate('Onboarding');
+                },
               },
-            },
-          ]
-        );
+            ]
+          );
+        } else {
+          Alert.alert(
+            t('login.loginSuccess'),
+            `${userName}${t('login.welcomeUser')}`,
+            [
+              {
+                text: t('login.ok'),
+                onPress: () => {
+                  onLoginSuccess?.(user);
+                  // 로그인 성공 신호와 함께 HomeScreen으로 이동
+                  navigation.navigate('Home', { loginSuccess: true } as any);
+                },
+              },
+            ]
+          );
+        }
       }
     } catch (error) {
       console.error('로그인 처리 오류:', error);
@@ -91,19 +124,38 @@ export default function LoginScreen({ onLoginSuccess }: LoginScreenProps) {
       const user = await SocialAuthService.signInWithApple();
       
       if (user) {
-        Alert.alert(
-          t('login.loginSuccess'),
-          `${user.displayName || user.email}${t('login.welcomeUser')}`,
-          [
-            {
-              text: t('login.ok'),
-              onPress: () => {
-                onLoginSuccess?.(user);
-                navigation.goBack();
+        // 온보딩 완료 여부에 따라 다른 페이지로 이동
+        if (user.onboardingCompleted === false) {
+          Alert.alert(
+            t('login.loginSuccess'),
+            '로그인이 완료되었습니다! 프로필을 설정해주세요.',
+            [
+              {
+                text: t('login.ok'),
+                onPress: () => {
+                  onLoginSuccess?.(user);
+                  navigation.navigate('Onboarding');
+                },
               },
-            },
-          ]
-        );
+            ]
+          );
+        } else {
+          const userName = user.nickname || user.displayName || user.email || '사용자';
+          Alert.alert(
+            t('login.loginSuccess'),
+            `${userName}${t('login.welcomeUser')}`,
+            [
+              {
+                text: t('login.ok'),
+                onPress: () => {
+                  onLoginSuccess?.(user);
+                  // 로그인 성공 신호와 함께 HomeScreen으로 이동
+                  navigation.navigate('Home', { loginSuccess: true } as any);
+                },
+              },
+            ]
+          );
+        }
       }
     } catch (error) {
       console.error('Apple 로그인 처리 오류:', error);
@@ -113,54 +165,33 @@ export default function LoginScreen({ onLoginSuccess }: LoginScreenProps) {
     }
   };
 
-  const renderPrimaryButton = (provider: SocialProvider) => (
-    <TouchableOpacity
-      key={provider.key}
-      style={[
-        styles.primaryButton,
-        { backgroundColor: provider.backgroundColor },
-        loading === provider.key && styles.buttonDisabled,
-      ]}
-      onPress={() => handleSocialLogin(provider)}
-      disabled={loading !== null}
-      activeOpacity={0.8}
-    >
-      {loading === provider.key ? (
-        <ActivityIndicator 
-          size="small" 
-          color={provider.textColor} 
-          style={styles.buttonLoader}
-        />
-      ) : (
-        <>
-          <Text style={[styles.buttonIcon, { color: provider.textColor }]}>
-            {provider.icon}
-          </Text>
-          <Text style={[styles.buttonText, { color: provider.textColor }]}>
-            {provider.label}
-          </Text>
-        </>
-      )}
-    </TouchableOpacity>
-  );
+  const renderPrimaryButton = (provider: SocialProvider) => {
+    const commonProps = {
+      provider,
+      onPress: () => handleSocialLogin(provider),
+      loading: loading === provider.key,
+      disabled: loading !== null,
+    };
+
+    // 각 플랫폼별 전용 버튼 컴포넌트 사용
+    switch (provider.key) {
+      case 'kakao':
+        return <KakaoLoginButton key={provider.key} {...commonProps} />;
+      case 'google':
+        return <GoogleLoginButton key={provider.key} {...commonProps} />;
+      default:
+        return <PrimaryLoginButton key={provider.key} {...commonProps} />;
+    }
+  };
 
   const renderSecondaryButton = (provider: SocialProvider) => (
-    <TouchableOpacity
+    <IconLoginButton
       key={provider.key}
-      style={[
-        styles.secondaryButton,
-        loading === provider.key && styles.buttonDisabled,
-      ]}
+      provider={provider}
       onPress={() => handleSocialLogin(provider)}
+      loading={loading === provider.key}
       disabled={loading !== null}
-      activeOpacity={0.8}
-    >
-      {loading === provider.key ? (
-        <ActivityIndicator size="small" color="#666" />
-      ) : (
-        <Text style={styles.secondaryIcon}>{provider.icon}</Text>
-      )}
-    </TouchableOpacity>
+    />
   );
 
   return (
@@ -222,13 +253,7 @@ export default function LoginScreen({ onLoginSuccess }: LoginScreenProps) {
         {/* 개인정보 안내 */}
         <View style={styles.privacyContainer}>
           <Text style={styles.privacyText}>
-            {t('login.privacyNotice').split(t('login.privacyBold')).map((part, index) => (
-              index === 1 ? (
-                <Text key={index} style={styles.privacyBold}>{t('login.privacyBold')}</Text>
-              ) : (
-                part
-              )
-            ))}
+            {t('login.privacyNotice')}
           </Text>
         </View>
 
@@ -303,33 +328,7 @@ const styles = StyleSheet.create({
   primaryButtonsContainer: {
     marginBottom: 32,
   },
-  primaryButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: 48,
-    borderRadius: 12,
-    marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 3,
-  },
-  buttonIcon: {
-    fontSize: 20,
-    marginRight: 12,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  buttonLoader: {
-    marginRight: 8,
-  },
+
   buttonDisabled: {
     opacity: 0.6,
   },
@@ -354,27 +353,7 @@ const styles = StyleSheet.create({
     gap: 16,
     marginBottom: 40,
   },
-  secondaryButton: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#FFFFFF',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#E5E7EB',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 2,
-  },
-  secondaryIcon: {
-    fontSize: 24,
-  },
+
   privacyContainer: {
     backgroundColor: '#EFF6FF',
     padding: 16,

@@ -28,13 +28,18 @@ export class KakaoAuthService {
         const profile = await KakaoLogin.getProfile();
         console.log('카카오 프로필 받기 성공:', profile);
 
-        const authUser: AuthUser = {
+        let authUser: AuthUser = {
           uid: profile.id.toString(),
           email: profile.email || null,
           displayName: profile.nickname || null,
           photoURL: profile.profileImageUrl || null,
           provider: 'kakao',
+          nickname: null,
         };
+
+        // Firebase users 컬렉션에 사용자 생성 또는 업데이트
+        const { SocialAuthService } = await import('./socialAuth');
+        authUser = await SocialAuthService.createOrUpdateFirebaseUser(authUser);
 
         // 사용자 정보 저장
         await AsyncStorage.setItem('user', JSON.stringify(authUser));

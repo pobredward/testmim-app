@@ -19,6 +19,7 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.onmindlab.testmim",
       "googleServicesFile": "./GoogleService-Info.plist",
+      "usesAppleSignIn": true,
       "infoPlist": {
         "CFBundleURLTypes": [
           {

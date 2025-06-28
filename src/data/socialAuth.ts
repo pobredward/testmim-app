@@ -6,44 +6,46 @@ export interface SocialProvider {
   backgroundColor: string;
   textColor: string;
   icon: string;
+  borderColor?: string;
 }
 
 export const SOCIAL_PROVIDERS: SocialProvider[] = [
   {
     name: "구글",
     key: "google",
-    label: "구글로 로그인",
+    label: "Google 로그인",
     primary: true,
     backgroundColor: "#FFFFFF",
-    textColor: "#000000",
-    icon: "🔍", // 실제로는 Google 아이콘 이미지 사용
+    textColor: "#3C4043",
+    borderColor: "#DADCE0",
+    icon: "google", // SVG 아이콘 컴포넌트 사용
   },
   {
     name: "애플",
     key: "apple",
     label: "Apple로 로그인",
-    primary: true,
+    primary: false,
     backgroundColor: "#000000",
     textColor: "#FFFFFF",
-    icon: "🍎",
+    icon: "apple",
   },
   {
     name: "카카오",
     key: "kakao",
-    label: "카카오로 로그인",
-    primary: false,
+    label: "카카오 로그인",
+    primary: true,
     backgroundColor: "#FEE500",
-    textColor: "#392020",
-    icon: "💬",
+    textColor: "rgba(0, 0, 0, 0.85)",
+    icon: "kakao",
   },
   {
     name: "페이스북",
     key: "facebook",
-    label: "페이스북으로 로그인",
+    label: "Facebook으로 로그인",
     primary: false,
     backgroundColor: "#1877F2",
     textColor: "#FFFFFF",
-    icon: "📘",
+    icon: "facebook",
   },
   {
     name: "네이버",
@@ -52,12 +54,12 @@ export const SOCIAL_PROVIDERS: SocialProvider[] = [
     primary: false,
     backgroundColor: "#03C75A",
     textColor: "#FFFFFF",
-    icon: "🟢",
+    icon: "naver",
   },
 ];
 
-// 주요 소셜 로그인 버튼으로 표시할 제공자들
+// 주요 소셜 로그인 버튼으로 표시할 제공자들 (완성형)
 export const getPrimaryProviders = () => SOCIAL_PROVIDERS.filter(provider => provider.primary);
 
-// 아이콘으로만 표시할 제공자들
+// 아이콘으로만 표시할 제공자들 (아이콘형)
 export const getSecondaryProviders = () => SOCIAL_PROVIDERS.filter(provider => !provider.primary); 

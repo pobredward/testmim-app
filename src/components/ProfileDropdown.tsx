@@ -19,6 +19,7 @@ const { width } = Dimensions.get('window');
 type RootStackParamList = {
   Home: undefined;
   Login: undefined;
+  MyPage: undefined;
 };
 
 type ProfileDropdownNavigationProp = StackNavigationProp<RootStackParamList>;
@@ -85,10 +86,10 @@ export default function ProfileDropdown({ user, onUserChange }: ProfileDropdownP
             {user ? (
               // 로그인된 상태
               <>
-                {(user.displayName || user.email) && (
+                {(user.nickname || user.displayName || user.email) && (
                   <View style={styles.userInfo}>
                     <Text style={styles.userName}>
-                      {user.displayName || user.email}님
+                      {user.nickname || user.displayName || user.email}님
                     </Text>
                   </View>
                 )}
@@ -97,8 +98,7 @@ export default function ProfileDropdown({ user, onUserChange }: ProfileDropdownP
                   style={styles.menuItem}
                   onPress={() => {
                     setIsVisible(false);
-                    // TODO: 마이페이지 구현
-                    Alert.alert('준비중', '마이페이지 기능을 준비중입니다.');
+                    navigation.navigate('MyPage');
                   }}
                   activeOpacity={0.7}
                 >

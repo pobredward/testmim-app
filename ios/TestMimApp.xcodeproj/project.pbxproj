@@ -24,7 +24,7 @@
 		33C41ABF66F8432C8D67951D /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "TestMimApp/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5F7483F915CAC5468106B89D /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-TestMimApp/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		7974DE4C3A910DD682A719A9 /* Pods-TestMimApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestMimApp.release.xcconfig"; path = "Target Support Files/Pods-TestMimApp/Pods-TestMimApp.release.xcconfig"; sourceTree = "<group>"; };
-		A353A5FA8A63A9EB00E7400A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = TestMimApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		A353A5FA8A63A9EB00E7400A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xml; name = PrivacyInfo.xcprivacy; path = TestMimApp/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		A79B745C651E2E13996B041D /* Pods-TestMimApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestMimApp.debug.xcconfig"; path = "Target Support Files/Pods-TestMimApp/Pods-TestMimApp.debug.xcconfig"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = TestMimApp/SplashScreen.storyboard; sourceTree = "<group>"; };
 		B230FBF10E0D4F8FA38E0AD6 /* libPods-TestMimApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TestMimApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -131,7 +131,6 @@
 				A79B745C651E2E13996B041D /* Pods-TestMimApp.debug.xcconfig */,
 				7974DE4C3A910DD682A719A9 /* Pods-TestMimApp.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -360,13 +359,16 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TestMimApp/TestMimApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3V8G7Y74HY;
 				ENABLE_BITCODE = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"FB_SONARKIT_ENABLED=1",
 				);
 				INFOPLIST_FILE = TestMimApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				INFOPLIST_KEY_CFBundleDisplayName = "Testmim | 테스트밈";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -396,8 +398,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = TestMimApp/TestMimApp.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 3V8G7Y74HY;
 				INFOPLIST_FILE = TestMimApp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				INFOPLIST_KEY_CFBundleDisplayName = "Testmim | 테스트밈";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.entertainment";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -473,10 +478,7 @@
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -531,10 +533,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(SDKROOT)/usr/lib/swift\"$(inherited)\"";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;

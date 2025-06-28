@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -11,7 +11,7 @@ import {
   Alert,
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SocialAuthService, AuthUser } from '../services/socialAuth';
 import { getThumbnailByCode } from '../constants/thumbnails';
@@ -52,6 +52,7 @@ interface Stats {
 export default function HomeScreen() {
   const { t, i18n } = useTranslation();
   const navigation = useNavigation<HomeScreenNavigationProp>();
+  const route = useRoute();
   const [tests, setTests] = useState<Test[]>([]);
   const [stats, setStats] = useState<Stats>({});
   const [user, setUser] = useState<AuthUser | null>(null);
@@ -64,15 +65,41 @@ export default function HomeScreen() {
     setTests(allTests);
   }, [i18n.language]);
 
-  // 사용자 상태 확인
-  useEffect(() => {
-    checkUserStatus();
+  // 사용자 상태 확인 함수
+  const checkUserStatus = useCallback(async () => {
+    try {
+      const currentUser = await SocialAuthService.getCurrentUser();
+      console.log('🔍 현재 사용자 상태 확인:', currentUser);
+      setUser(currentUser);
+    } catch (error) {
+      console.error('❌ 사용자 상태 확인 오류:', error);
+      setUser(null);
+    }
   }, []);
 
-  const checkUserStatus = async () => {
-    const currentUser = await SocialAuthService.getCurrentUser();
-    setUser(currentUser);
-  };
+  // 화면 포커스 시마다 사용자 상태 확인
+  useFocusEffect(
+    useCallback(() => {
+      console.log('🏠 HomeScreen 포커스됨 - 사용자 상태 확인');
+      checkUserStatus();
+    }, [checkUserStatus])
+  );
+
+  // 로그인 성공 또는 온보딩 완료 후 HomeScreen으로 돌아온 경우 처리
+  useEffect(() => {
+    const params = route.params as any;
+    if (params?.loginSuccess) {
+      console.log('🎉 로그인 성공으로 HomeScreen 돌아옴 - 사용자 상태 다시 확인');
+      checkUserStatus();
+      // params 초기화 (중복 실행 방지)
+      navigation.setParams({ loginSuccess: undefined } as any);
+    } else if (params?.onboardingCompleted) {
+      console.log('✅ 온보딩 완료로 HomeScreen 돌아옴 - 사용자 상태 다시 확인');
+      checkUserStatus();
+      // params 초기화 (중복 실행 방지)
+      navigation.setParams({ onboardingCompleted: undefined } as any);
+    }
+  }, [route.params, checkUserStatus, navigation]);
 
   // 숫자 포맷팅 함수
   const formatViews = (views: number): string => {

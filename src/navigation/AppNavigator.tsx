@@ -6,6 +6,8 @@ import TestDetailScreen from '../screens/TestDetailScreen';
 import TestExecutionScreen from '../screens/TestExecutionScreen';
 import TestResultScreen from '../screens/TestResultScreen';
 import LoginScreen from '../screens/LoginScreen';
+import OnboardingScreen from '../screens/OnboardingScreen';
+import MyPageScreen from '../screens/MyPageScreen';
 import type { TestAnswer } from '../types/tests';
 
 export type RootStackParamList = {
@@ -14,6 +16,8 @@ export type RootStackParamList = {
   TestExecution: { testCode: string };
   TestResult: { testCode: string; answers: TestAnswer[] };
   Login: undefined;
+  Onboarding: undefined;
+  MyPage: undefined;
 };
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -33,6 +37,8 @@ export default function AppNavigator() {
         <Stack.Screen name="TestExecution" component={TestExecutionScreen} />
         <Stack.Screen name="TestResult" component={TestResultScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+        <Stack.Screen name="MyPage" component={MyPageScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
