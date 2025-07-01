@@ -1,4 +1,4 @@
-import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { doc, updateDoc, serverTimestamp, getDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
 import { UserData } from "./userAuth";
 
@@ -96,9 +96,21 @@ export async function giveExpToUser(
     throw new Error("UID가 필요합니다.");
   }
 
+  console.log("🎮 경험치 지급 시작:", {
+    uid: uid.substring(0, 8) + "...",
+    source: expGainData.source,
+    expAmount: expGainData.expAmount,
+    currentUserData: currentUserData ? "있음" : "없음",
+  });
+
   // 현재 사용자 데이터에서 경험치/레벨 정보 가져오기
   const currentExp = currentUserData?.exp || 0;
   const currentLevel = currentUserData?.level || 1;
+  
+  console.log("📊 현재 사용자 상태:", {
+    currentExp,
+    currentLevel,
+  });
   
   // 새로운 경험치 계산
   const newTotalExp = currentExp + expGainData.expAmount;
@@ -106,18 +118,44 @@ export async function giveExpToUser(
   
   const leveledUp = newLevel > currentLevel;
   
+  console.log("🔢 계산된 새로운 상태:", {
+    newTotalExp,
+    newLevel,
+    leveledUp,
+  });
+  
   // Firebase에 업데이트
-  const userRef = doc(db, "users", uid);
-  const updateData: Partial<UserData> = {
-    exp: newTotalExp,
-    level: newLevel,
-    updatedAt: serverTimestamp(),
-  };
+  try {
+    const userRef = doc(db, "users", uid);
+    const updateData: Partial<UserData> = {
+      exp: newTotalExp,
+      level: newLevel,
+      updatedAt: serverTimestamp(),
+    };
 
-  await updateDoc(userRef, updateData);
+    console.log("🔥 Firebase 업데이트 시도 중...", updateData);
+    
+    await updateDoc(userRef, updateData);
+    
+    console.log("✅ Firebase 업데이트 성공!");
+    
+    // 업데이트 후 실제 데이터 확인
+    const updatedDoc = await getDoc(userRef);
+    if (updatedDoc.exists()) {
+      const updatedData = updatedDoc.data() as UserData;
+      console.log("🔍 업데이트 후 실제 데이터:", {
+        exp: updatedData.exp,
+        level: updatedData.level,
+      });
+    }
+    
+  } catch (error) {
+    console.error("❌ Firebase 업데이트 실패:", error);
+    throw error;
+  }
   
   console.log("✅ 경험치 지급 완료:", {
-    uid,
+    uid: uid.substring(0, 8) + "...",
     source: expGainData.source,
     expGained: expGainData.expAmount,
     oldExp: currentExp,

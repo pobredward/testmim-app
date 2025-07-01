@@ -3,21 +3,23 @@ import { collection, doc, setDoc, getDoc, updateDoc, serverTimestamp, query, whe
 import { GameResult, GameStats, UserGameStats } from '../types/games';
 import { awardExperience } from './expLevel';
 
-export const saveGameResult = async (gameResult: GameResult): Promise<boolean> => {
+export const saveGameResult = async (gameResult: GameResult, isPersonalBest: boolean = false): Promise<boolean> => {
   try {
+    // Only save if it's a personal best
+    if (!isPersonalBest) {
+      return true; // Don't save, but return success
+    }
+    
     const resultRef = doc(collection(db, 'gameResults'));
     const resultWithTimestamp = {
       ...gameResult,
+      isPersonalBest,
       completedAt: serverTimestamp(),
     };
     
     await setDoc(resultRef, resultWithTimestamp);
     
-    // Update user game stats
-    await updateUserGameStats(gameResult);
-    
-    // Award experience points
-    await awardExperience(gameResult.userId, gameResult.experienceGained);
+    console.log('✅ 개인 최고 기록 저장 완료:', gameResult);
     
     return true;
   } catch (error) {
@@ -26,143 +28,250 @@ export const saveGameResult = async (gameResult: GameResult): Promise<boolean> =
   }
 };
 
-export const updateUserGameStats = async (gameResult: GameResult): Promise<void> => {
+// Get user's best score for a specific game
+export const getUserBestScore = async (userId: string, gameId: string): Promise<number | null> => {
   try {
-    const userStatsRef = doc(db, 'userGameStats', gameResult.userId);
-    const userStatsDoc = await getDoc(userStatsRef);
+    const gameResultsRef = collection(db, 'gameResults');
+    const q = query(
+      gameResultsRef,
+      where('userId', '==', userId),
+      where('gameId', '==', gameId),
+      where('isPersonalBest', '==', true),
+      orderBy('score', gameId === 'reaction-time' ? 'asc' : 'desc'),
+      limit(1)
+    );
     
-    if (userStatsDoc.exists()) {
-      const currentStats = userStatsDoc.data() as UserGameStats;
-      const gameStats = currentStats.gameStats[gameResult.gameId] || {
-        gameId: gameResult.gameId,
-        totalPlays: 0,
-        bestScore: 0,
-        averageScore: 0,
-        totalExperienceGained: 0,
-      };
-      
-      // Update game-specific stats
-      const newTotalPlays = gameStats.totalPlays + 1;
-      const newBestScore = Math.max(gameStats.bestScore, gameResult.score);
-      const newTotalExp = gameStats.totalExperienceGained + gameResult.experienceGained;
-      const newAverageScore = ((gameStats.averageScore * gameStats.totalPlays) + gameResult.score) / newTotalPlays;
-      
-      const updatedGameStats = {
-        ...gameStats,
-        totalPlays: newTotalPlays,
-        bestScore: newBestScore,
-        averageScore: Math.round(newAverageScore),
-        totalExperienceGained: newTotalExp,
-        lastPlayedAt: new Date().toISOString(),
-      };
-      
-      // Update overall user stats
-      const updatedUserStats: UserGameStats = {
-        ...currentStats,
-        gameStats: {
-          ...currentStats.gameStats,
-          [gameResult.gameId]: updatedGameStats,
-        },
-        totalGamesPlayed: currentStats.totalGamesPlayed + 1,
-        totalExperienceFromGames: currentStats.totalExperienceFromGames + gameResult.experienceGained,
-      };
-      
-      // Update favorite game if this game has more plays
-      const favoriteGame = Object.entries(updatedUserStats.gameStats)
-        .reduce((prev, [gameId, stats]) => 
-          stats.totalPlays > (updatedUserStats.gameStats[prev]?.totalPlays || 0) ? gameId : prev
-        , gameResult.gameId);
-      
-      updatedUserStats.favoriteGameId = favoriteGame;
-      
-      await updateDoc(userStatsRef, updatedUserStats as any);
-    } else {
-      // Create new user game stats
-      const newUserStats: UserGameStats = {
-        userId: gameResult.userId,
-        gameStats: {
-          [gameResult.gameId]: {
-            gameId: gameResult.gameId,
-            totalPlays: 1,
-            bestScore: gameResult.score,
-            averageScore: gameResult.score,
-            totalExperienceGained: gameResult.experienceGained,
-            lastPlayedAt: new Date().toISOString(),
-          },
-        },
-        totalGamesPlayed: 1,
-        totalExperienceFromGames: gameResult.experienceGained,
-        favoriteGameId: gameResult.gameId,
-      };
-      
-      await setDoc(userStatsRef, newUserStats as any);
+    const querySnapshot = await getDocs(q);
+    
+    if (!querySnapshot.empty) {
+      const bestResult = querySnapshot.docs[0].data();
+      return bestResult.score;
     }
+    
+    return null;
   } catch (error) {
-    console.error('사용자 게임 통계 업데이트 오류:', error);
+    console.error('사용자 최고 점수 조회 오류:', error);
+    return null;
+  }
+};
+
+// Get user's total play count for a specific game
+export const getUserGamePlayCount = async (userId: string, gameId: string): Promise<number> => {
+  try {
+    const gameResultsRef = collection(db, 'gameResults');
+    const q = query(
+      gameResultsRef,
+      where('userId', '==', userId),
+      where('gameId', '==', gameId)
+    );
+    
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.size;
+  } catch (error) {
+    console.error('사용자 게임 플레이 횟수 조회 오류:', error);
+    return 0;
+  }
+};
+
+// Get user's personal best records across all games
+export const getUserPersonalBests = async (userId: string): Promise<any[]> => {
+  try {
+    const gameResultsRef = collection(db, 'gameResults');
+    const q = query(
+      gameResultsRef,
+      where('userId', '==', userId),
+      where('isPersonalBest', '==', true),
+      orderBy('completedAt', 'desc')
+    );
+    
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+  } catch (error) {
+    console.error('사용자 개인 최고 기록 조회 오류:', error);
+    return [];
+  }
+};
+
+// Get Korean date in YYYY-MM-DD format
+export const getKoreanDate = (): string => {
+  const now = new Date();
+  const koreanTime = new Date(now.getTime() + (9 * 60 * 60 * 1000)); // UTC+9
+  return koreanTime.toISOString().split('T')[0]; // YYYY-MM-DD
+};
+
+// Get user's daily play count for a specific game
+export const getUserDailyPlayCount = async (userId: string, gameId: string): Promise<number> => {
+  try {
+    const dailyPlayRef = doc(db, 'dailyPlayCounts', userId);
+    const dailyPlayDoc = await getDoc(dailyPlayRef);
+    
+    const today = getKoreanDate();
+    
+    if (dailyPlayDoc.exists()) {
+      const data = dailyPlayDoc.data();
+      const lastPlayDate = data.lastPlayDate;
+      const gamePlayCounts = data.gamePlayCounts || {};
+      
+      // If date has changed, reset count for this game
+      if (lastPlayDate !== today) {
+        return 0;
+      }
+      
+      return gamePlayCounts[gameId] || 0;
+    }
+    
+    return 0;
+  } catch (error) {
+    console.error('일일 플레이 횟수 조회 오류:', error);
+    return 0;
+  }
+};
+
+// Increment user's daily play count for a specific game
+export const incrementUserDailyPlayCount = async (userId: string, gameId: string): Promise<number> => {
+  try {
+    const dailyPlayRef = doc(db, 'dailyPlayCounts', userId);
+    const dailyPlayDoc = await getDoc(dailyPlayRef);
+    
+    const today = getKoreanDate();
+    let newCount = 1;
+    
+    if (dailyPlayDoc.exists()) {
+      const data = dailyPlayDoc.data();
+      const lastPlayDate = data.lastPlayDate;
+      const gamePlayCounts = data.gamePlayCounts || {};
+      
+      if (lastPlayDate === today) {
+        // Same day, increment count
+        newCount = (gamePlayCounts[gameId] || 0) + 1;
+      } else {
+        // New day, reset count to 1
+        newCount = 1;
+      }
+      
+      // Update the document
+      await updateDoc(dailyPlayRef, {
+        lastPlayDate: today,
+        [`gamePlayCounts.${gameId}`]: newCount,
+        updatedAt: serverTimestamp(),
+      });
+    } else {
+      // Create new document
+      await setDoc(dailyPlayRef, {
+        userId,
+        lastPlayDate: today,
+        gamePlayCounts: {
+          [gameId]: newCount,
+        },
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+    }
+    
+    return newCount;
+  } catch (error) {
+    console.error('일일 플레이 횟수 증가 오류:', error);
     throw error;
   }
 };
 
-export const getUserGameStats = async (userId: string): Promise<UserGameStats | null> => {
+// Check if user can play (hasn't reached daily limit)
+export const canUserPlay = async (userId: string, gameId: string, dailyLimit: number = 5): Promise<{ canPlay: boolean; currentCount: number }> => {
   try {
-    const userStatsRef = doc(db, 'userGameStats', userId);
-    const userStatsDoc = await getDoc(userStatsRef);
-    
-    if (userStatsDoc.exists()) {
-      return userStatsDoc.data() as UserGameStats;
-    }
-    
-    return null;
+    const currentCount = await getUserDailyPlayCount(userId, gameId);
+    return {
+      canPlay: currentCount < dailyLimit,
+      currentCount,
+    };
   } catch (error) {
-    console.error('사용자 게임 통계 조회 오류:', error);
-    return null;
+    console.error('플레이 가능 여부 확인 오류:', error);
+    return { canPlay: true, currentCount: 0 };
   }
 };
 
 export async function getGameLeaderboard(gameId: string, limitCount: number = 10): Promise<any[]> {
   try {
-    const gameResultsRef = collection(db, 'game_results');
-    const q = query(
+    console.log('🏆 리더보드 조회 시작:', { gameId, limitCount });
+    const gameResultsRef = collection(db, 'gameResults');
+    
+    // Query only personal best records for this game
+    const personalBestQuery = query(
       gameResultsRef,
       where('gameId', '==', gameId),
-      orderBy('score', gameId === 'reaction-time' ? 'asc' : 'desc'), // For reaction time, lower is better
-      limit(limitCount)
+      where('isPersonalBest', '==', true),
+      limit(limitCount * 2) // Get more results in case we need to filter duplicates
     );
     
-    const querySnapshot = await getDocs(q);
-    const leaderboard = await Promise.all(
-      querySnapshot.docs.map(async (docSnapshot, index) => {
-        const data = docSnapshot.data();
+    const querySnapshot = await getDocs(personalBestQuery);
+    console.log('🏆 조회된 개인 최고 기록 개수:', querySnapshot.docs.length);
+    
+    if (querySnapshot.empty) {
+      console.log('🏆 개인 최고 기록이 없습니다:', gameId);
+      return [];
+    }
+    
+    // Get all personal best results
+    const results = querySnapshot.docs.map(doc => {
+      const data = doc.data() as any;
+      return {
+        id: doc.id,
+        ...data
+      };
+    });
+    
+    console.log('🏆 원시 개인 최고 기록 결과:', results);
+    
+    // Remove duplicate users (keep the best score for each user)
+    const uniqueResults = new Map();
+    results.forEach(result => {
+      const existingResult = uniqueResults.get(result.userId);
+      if (!existingResult) {
+        uniqueResults.set(result.userId, result);
+      } else {
+        // For reaction-time, lower is better; for others, higher is better
+        const isBetter = gameId === 'reaction-time' 
+          ? result.score < existingResult.score 
+          : result.score > existingResult.score;
         
-        // Get user display name
-        let userName = 'Unknown';
-        if (data.userId) {
-          try {
-            const userRef = doc(db, 'users', data.userId);
-            const userDoc = await getDoc(userRef);
-            if (userDoc.exists()) {
-              const userData = userDoc.data() as any;
-              userName = userData.displayName || userData.name || userName;
-            }
-          } catch (error) {
-            console.warn('Failed to get user name:', error);
-          }
+        if (isBetter) {
+          uniqueResults.set(result.userId, result);
         }
+      }
+    });
+    
+    // Convert back to array and sort
+    const uniqueResultsArray = Array.from(uniqueResults.values());
+    const sortedResults = uniqueResultsArray.sort((a, b) => {
+      if (gameId === 'reaction-time') {
+        return a.score - b.score; // Lower is better
+      } else {
+        return b.score - a.score; // Higher is better
+      }
+    });
+    
+    const leaderboard = sortedResults.slice(0, limitCount).map((data, index) => {
+      // Use stored userName or fallback to userId-based name
+      const userName = data.userName || 
+                      data.userId?.split('@')[0] || 
+                      `Player ${data.userId?.substring(0, 8) || 'Unknown'}`;
 
-        return {
-          userId: data.userId,
-          userName,
-          score: data.score,
-          details: data.details || {},
-          completedAt: data.completedAt?.toDate?.()?.toISOString() || data.completedAt,
-          rank: index + 1,
-        };
-      })
-    );
+      return {
+        userId: data.userId,
+        userName,
+        score: data.score,
+        details: data.details || {},
+        completedAt: data.completedAt?.toDate?.()?.toISOString() || data.completedAt || new Date().toISOString(),
+        rank: index + 1,
+      };
+    });
 
+    console.log('🏆 최종 리더보드:', leaderboard);
     return leaderboard;
   } catch (error) {
-    console.error('Failed to fetch game leaderboard:', error);
+    console.error('❌ 리더보드 조회 실패:', error);
     return [];
   }
 }

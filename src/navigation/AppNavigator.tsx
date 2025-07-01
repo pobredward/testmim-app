@@ -11,7 +11,7 @@ import OnboardingScreen from '../screens/OnboardingScreen';
 import MyPageScreen from '../screens/MyPageScreen';
 import GamesScreen from '../screens/GamesScreen';
 import ReactionTimeGameScreen from '../screens/ReactionTimeGameScreen';
-import LeaderboardScreen from '../screens/LeaderboardScreen';
+
 import type { TestAnswer } from '../types/tests';
 
 export type RootStackParamList = {
@@ -25,7 +25,6 @@ export type RootStackParamList = {
   Games: undefined;
   GameDetail: { gameId: string };
   ReactionTimeGame: { gameId: string };
-  Leaderboard: undefined;
   TestScreen: { testCode: string };
 };
 
@@ -62,20 +61,7 @@ export default function AppNavigator() {
               fontWeight: 'bold',
               fontSize: 18,
             },
-            headerRight: () => (
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Leaderboard')}
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingHorizontal: 16,
-                  paddingVertical: 8,
-                }}
-              >
-                <Text style={{ fontSize: 16, marginRight: 4 }}>🏆</Text>
-                <Text style={{ color: '#ffffff', fontSize: 14, fontWeight: '600' }}>랭킹</Text>
-              </TouchableOpacity>
-            ),
+
           })}
         />
         <Stack.Screen name="GameDetail" component={GamesScreen} />
@@ -95,22 +81,7 @@ export default function AppNavigator() {
             },
           }}
         />
-        <Stack.Screen 
-          name="Leaderboard" 
-          component={LeaderboardScreen}
-          options={{
-            headerShown: true,
-            title: '게임 랭킹',
-            headerStyle: {
-              backgroundColor: '#f59e0b',
-            },
-            headerTintColor: '#ffffff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              fontSize: 18,
-            },
-          }}
-        />
+
         <Stack.Screen name="TestScreen" component={TestDetailScreen} />
       </Stack.Navigator>
     </NavigationContainer>

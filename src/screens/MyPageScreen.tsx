@@ -20,6 +20,7 @@ import { SocialAuthService, AuthUser } from '../services/socialAuth';
 import { getUserFromFirestore, updateUserProfile } from '../utils/userAuth';
 import LevelProgressBar from '../components/LevelProgressBar';
 import ExpGuideModal from '../components/ExpGuideModal';
+import GameStatsCard from '../components/GameStatsCard';
 
 type RootStackParamList = {
   Login: undefined;
@@ -288,6 +289,11 @@ export default function MyPageScreen() {
           <LevelProgressBar currentExp={userExp} currentLevel={userLevel} />
         )}
       </View>
+
+      {/* 미니게임 기록 섹션 */}
+      {user?.uid && (
+        <GameStatsCard userId={user.uid} />
+      )}
 
       {/* 상세 정보 섹션 */}
       <View style={styles.section}>

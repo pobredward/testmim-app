@@ -15,8 +15,8 @@ export default function LevelProgressBar({ currentExp, currentLevel }: LevelProg
   const [expForNextLevel, setExpForNextLevel] = useState(0);
   const [expNeededForNext, setExpNeededForNext] = useState(0);
   
-  // 애니메이션 값
-  const progressAnim = new Animated.Value(0);
+  // 애니메이션 값 - useState로 관리하여 컴포넌트가 재렌더링되어도 값이 초기화되지 않도록 함
+  const [progressAnim] = useState(new Animated.Value(0));
 
   useEffect(() => {
     // 현재 레벨까지 필요한 총 경험치 계산
@@ -125,12 +125,7 @@ export default function LevelProgressBar({ currentExp, currentLevel }: LevelProg
         </View>
       </View>
 
-      {/* 혜택 힌트 */}
-      <View style={styles.hintCard}>
-        <Text style={styles.hintText}>
-          💡 레벨이 올라갈수록 더 많은 테스트와 기능을 이용할 수 있어요!
-        </Text>
-      </View>
+
     </View>
   );
 }
@@ -301,16 +296,5 @@ const styles = StyleSheet.create({
   levelUpMessage: {
     fontSize: 9,
     color: '#a855f7',
-  },
-  hintCard: {
-    backgroundColor: '#eff6ff',
-    borderRadius: 8,
-    padding: 10,
-  },
-  hintText: {
-    fontSize: 10,
-    color: '#1d4ed8',
-    textAlign: 'center',
-    lineHeight: 14,
   },
 }); 

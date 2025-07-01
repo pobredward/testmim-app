@@ -6,14 +6,19 @@ import {
   StyleSheet,
   Dimensions,
   Alert,
-  Animated,
   ScrollView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SocialAuthService, AuthUser } from '../services/socialAuth';
 import { getGameById } from '../data/games';
-import { GameResult, ReactionGameResult } from '../types/games';
-import { saveGameResult } from '../utils/gameUtils';
+import { GameResult } from '../types/games';
+import { 
+  getGameLeaderboard, 
+  saveGameResult, 
+  getUserDailyPlayCount, 
+  incrementUserDailyPlayCount, 
+  canUserPlay 
+} from '../utils/gameUtils';
 import { giveExpForMiniGameCompletion } from '../utils/expLevel';
 import { getUserFromFirestore } from '../utils/userAuth';
 import LevelUpModal from '../components/LevelUpModal';
@@ -36,6 +41,15 @@ interface AttemptResult {
   round: number;
 }
 
+interface LeaderboardEntry {
+  userId: string;
+  userName: string;
+  score: number;
+  details: any;
+  completedAt: string;
+  rank: number;
+}
+
 interface ReactionTimeGameScreenProps {
   navigation: any;
   route: {
@@ -50,7 +64,6 @@ export default function ReactionTimeGameScreen({ navigation, route }: ReactionTi
   const [user, setUser] = useState<AuthUser | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const startTimeRef = useRef<number>(0);
-  const animatedValue = useRef(new Animated.Value(0)).current;
   
   const [gameState, setGameState] = useState<GameState>('ready');
   const [currentRound, setCurrentRound] = useState(1);
@@ -58,6 +71,10 @@ export default function ReactionTimeGameScreen({ navigation, route }: ReactionTi
   const [currentTime, setCurrentTime] = useState<number | null>(null);
   const [bestTime, setBestTime] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [leaderboardLoading, setLeaderboardLoading] = useState(true);
+  const [dailyPlays, setDailyPlays] = useState(0);
+  const [canPlayGame, setCanPlayGame] = useState(true);
   
   // 모달 관련 상태
   const [showLevelUpModal, setShowLevelUpModal] = useState(false);
@@ -75,76 +92,84 @@ export default function ReactionTimeGameScreen({ navigation, route }: ReactionTi
   });
   
   const gameData = getGameById(gameId);
-  const totalRounds = 3;
+  const totalRounds = 1;
+  const DAILY_PLAY_LIMIT = 5;
 
-  // Load best time from AsyncStorage
+  // Load data
   useEffect(() => {
-    const loadBestTime = async () => {
+    const loadData = async () => {
       try {
+        // Check user first
+        const currentUser = await SocialAuthService.getCurrentUser();
+        setUser(currentUser);
+        
+        // Load best time from localStorage
         const saved = await AsyncStorage.getItem(`${gameId}-best`);
         if (saved) {
           setBestTime(parseInt(saved));
         }
+        
+        // Load daily plays using Firebase for logged in users
+        if (currentUser?.uid) {
+          try {
+            const currentPlays = await getUserDailyPlayCount(currentUser.uid, 'reaction-time');
+            setDailyPlays(currentPlays);
+            setCanPlayGame(currentPlays < DAILY_PLAY_LIMIT);
+          } catch (error) {
+            console.error('Failed to load daily plays:', error);
+            setDailyPlays(0);
+            setCanPlayGame(true);
+          }
+        } else {
+          // Guest users have no daily limit
+          setDailyPlays(0);
+          setCanPlayGame(true);
+        }
+        
+        // Load leaderboard
+        const leaderboardData = await getGameLeaderboard('reaction-time', 10);
+        setLeaderboard(leaderboardData);
+        setLeaderboardLoading(false);
+        
       } catch (error) {
-        console.log('Failed to load best time:', error);
+        console.error('Failed to load data:', error);
       }
     };
-    loadBestTime();
+    
+    loadData();
   }, [gameId]);
 
-  // Check if user is logged in (but allow playing without login)
-  useEffect(() => {
-    const checkUser = async () => {
-      const currentUser = await SocialAuthService.getCurrentUser();
-      setUser(currentUser);
-    };
-    checkUser();
-  }, []);
-
-  const triggerHaptic = useCallback((type: 'light' | 'medium' | 'heavy' = 'light') => {
-    if (Haptics?.impactAsync) {
-      switch (type) {
-        case 'light':
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-          break;
-        case 'medium':
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
-          break;
-        case 'heavy':
-          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Heavy);
-          break;
-      }
-    }
-  }, []);
-
-  const startGame = useCallback(() => {
+  const startGame = useCallback(async () => {
     if (gameState !== 'ready') return;
     
-    triggerHaptic('light');
+    // Check daily play limit (only for logged in users)
+    if (user?.uid) {
+      try {
+        const { canPlay: userCanPlay, currentCount } = await canUserPlay(user.uid, 'reaction-time', DAILY_PLAY_LIMIT);
+        
+        if (!userCanPlay) {
+          Alert.alert('플레이 제한', `하루 ${DAILY_PLAY_LIMIT}회 플레이 제한에 도달했습니다. 내일 다시 시도해주세요!`);
+          return;
+        }
+
+        // Increment play count
+        const newPlayCount = await incrementUserDailyPlayCount(user.uid, 'reaction-time');
+        setDailyPlays(newPlayCount);
+        setCanPlayGame(newPlayCount < DAILY_PLAY_LIMIT);
+      } catch (error) {
+        console.error('Failed to check/update play count:', error);
+        // Continue with game for error cases
+      }
+    }
+    
     setGameState('waiting');
-    
-    // Animate to waiting state
-    Animated.timing(animatedValue, {
-      toValue: 1,
-      duration: 300,
-      useNativeDriver: false,
-    }).start();
-    
     const randomDelay = Math.random() * 3000 + 2000; // 2-5 seconds
     
     timeoutRef.current = setTimeout(() => {
       startTimeRef.current = Date.now();
       setGameState('react');
-      triggerHaptic('medium');
-      
-      // Animate to react state
-      Animated.timing(animatedValue, {
-        toValue: 2,
-        duration: 200,
-        useNativeDriver: false,
-      }).start();
     }, randomDelay);
-  }, [gameState, animatedValue, triggerHaptic]);
+  }, [gameState, user]);
 
   const handleTouch = useCallback(() => {
     if (gameState === 'waiting') {
@@ -153,22 +178,22 @@ export default function ReactionTimeGameScreen({ navigation, route }: ReactionTi
         clearTimeout(timeoutRef.current);
         timeoutRef.current = null;
       }
-      triggerHaptic('heavy');
       setGameState('too-early');
-      
-      // Reset animation
-      Animated.timing(animatedValue, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: false,
-      }).start();
+      return;
+    }
+    
+    if (gameState === 'too-early') {
+      // Handle retry after too early click - start new game immediately
+      setAttempts([]);
+      setCurrentTime(null);
+      setCurrentRound(1);
+      setGameState('ready');
       return;
     }
     
     if (gameState === 'react') {
       const reactionTime = Date.now() - startTimeRef.current;
       setCurrentTime(reactionTime);
-      triggerHaptic('medium');
       
       const newAttempt: AttemptResult = {
         time: reactionTime,
@@ -176,22 +201,9 @@ export default function ReactionTimeGameScreen({ navigation, route }: ReactionTi
       };
       
       setAttempts(prev => [...prev, newAttempt]);
-      
-      // Reset animation
-      Animated.timing(animatedValue, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: false,
-      }).start();
-      
-      if (currentRound >= totalRounds) {
-        setGameState('result');
-      } else {
-        setCurrentRound(prev => prev + 1);
-        setGameState('ready');
-      }
+      setGameState('result');
     }
-  }, [gameState, currentRound, totalRounds, animatedValue, triggerHaptic]);
+  }, [gameState, currentRound]);
 
   const resetGame = () => {
     if (timeoutRef.current) {
@@ -202,183 +214,186 @@ export default function ReactionTimeGameScreen({ navigation, route }: ReactionTi
     setCurrentRound(1);
     setAttempts([]);
     setCurrentTime(null);
-    animatedValue.setValue(0);
-  };
-
-  const tryAgain = () => {
-    setGameState('ready');
-    animatedValue.setValue(0);
   };
 
   const calculateResults = () => {
     if (attempts.length === 0) return null;
     
-    const times = attempts.map(a => a.time);
-    const averageTime = times.reduce((sum, time) => sum + time, 0) / times.length;
-    const bestAttempt = Math.min(...times);
-    const accuracy = 100; // Since we completed all rounds
+    const attempt = attempts[0]; // 1라운드이므로 첫 번째 시도만
+    if (!attempt || attempt.time <= 0) return null;
     
     return {
-      attempts: times,
-      averageTime: Math.round(averageTime),
-      bestTime: bestAttempt,
-      accuracy,
+      reactionTime: attempt.time,
+      isSuccess: true,
     };
   };
 
-  const getScoreFromAverage = (avgTime: number): number => {
-    if (avgTime < 250) return 100;
-    if (avgTime < 300) return 90;
-    if (avgTime < 400) return 80;
-    if (avgTime < 500) return 70;
-    if (avgTime < 600) return 60;
-    if (avgTime < 800) return 50;
-    return 40;
-  };
-
-  const getRating = (avgTime: number): string => {
-    if (avgTime < 250) return '🔥 놀라운 반사신경!';
-    if (avgTime < 300) return '⚡ 매우 빠름!';
-    if (avgTime < 400) return '🎯 빠름';
-    if (avgTime < 500) return '👍 평균 이상';
-    if (avgTime < 600) return '👌 평균';
+  const getRating = (reactionTime: number): string => {
+    if (reactionTime < 250) return '🔥 놀라운 반사신경!';
+    if (reactionTime < 300) return '⚡ 매우 빠름!';
+    if (reactionTime < 400) return '🎯 빠름';
+    if (reactionTime < 500) return '👍 평균 이상';
+    if (reactionTime < 600) return '👌 평균';
     return '🐌 연습이 필요해요';
   };
 
-  const saveResult = async () => {
-    if (!user?.uid || attempts.length === 0) return;
-    
+  const formatScore = (score: number): string => {
+    return `${score}ms`;
+  };
+
+  const getRankMedal = (rank: number): string => {
+    switch (rank) {
+      case 1: return '🥇';
+      case 2: return '🥈';
+      case 3: return '🥉';
+      default: return `${rank}위`;
+    }
+  };
+
+    const saveResult = async () => {
     const results = calculateResults();
     if (!results) return;
     
     setLoading(true);
     
     try {
-      const score = getScoreFromAverage(results.averageTime);
-      const expGained = score >= 70 ? 10 : 5; // Higher EXP for good performance
-      
-      // Check if this is a personal best
+      // Always update local storage and check for personal best
       let isNewPersonalBest = false;
-      if (!bestTime || results.bestTime < bestTime) {
-        setBestTime(results.bestTime);
-        isNewPersonalBest = true;
-        try {
-          await AsyncStorage.setItem(`${gameId}-best`, results.bestTime.toString());
-        } catch (error) {
-          console.log('Failed to save best time:', error);
+      
+      if (results.isSuccess) {
+        if (!bestTime || results.reactionTime < bestTime) {
+          setBestTime(results.reactionTime);
+          await AsyncStorage.setItem(`${gameId}-best`, results.reactionTime.toString());
+          isNewPersonalBest = true;
         }
       }
       
-      const gameResult: GameResult = {
-        gameId,
-        userId: user.uid,
-        score: results.averageTime,
-        details: results,
-        experienceGained: expGained,
-        completedAt: new Date().toISOString(),
-        duration: 60, // Estimated game duration
-      };
-      
-      // Save to Firebase
-      await saveGameResult(gameResult);
-      
-      console.log('Game result saved:', gameResult);
-
-      // 미니게임 완료시 경험치 지급
-      try {
-        // 현재 사용자 데이터 조회
-        const currentUserData = await getUserFromFirestore(user.uid);
+      // Save to Firebase if user is logged in and it's a personal best (web logic)
+      if (user?.uid && results.isSuccess) {
+        // Get user's nickname from users collection
+        let userName = user.email?.split('@')[0] || `Player ${user.uid?.substring(0, 8)}`;
         
-        // 미니게임 완료 경험치 지급
-        const levelUpResult = await giveExpForMiniGameCompletion(
-          user.uid,
-          gameId,
-          results.averageTime,
-          isNewPersonalBest,
-          currentUserData || undefined
-        );
-        
-        console.log('✅ 미니게임 경험치 지급 완료:', levelUpResult);
-        
-        // 레벨업했다면 레벨업 모달 표시
-        if (levelUpResult.leveledUp) {
-          setLevelUpData({
-            oldLevel: levelUpResult.oldLevel,
-            newLevel: levelUpResult.newLevel,
-            expGained: levelUpResult.expGained,
-            currentExp: levelUpResult.totalExp,
-          });
-          
-          // 결과 페이지가 완전히 로드된 후 모달 표시
-          setTimeout(() => {
-            setShowLevelUpModal(true);
-          }, 1500);
-        } else if (levelUpResult.expGained > 0) {
-          // 레벨업은 없지만 경험치를 획득한 경우 경험치 획득 모달 표시
-          setExpGainData({
-            currentLevel: levelUpResult.newLevel,
-            currentExp: levelUpResult.totalExp,
-            expGained: levelUpResult.expGained,
-          });
-          
-          // 결과 페이지가 완전히 로드된 후 모달 표시
-          setTimeout(() => {
-            setShowExpGainModal(true);
-          }, 1500);
+        try {
+          const currentUserData = await getUserFromFirestore(user.uid);
+          if (currentUserData) {
+            userName = currentUserData.nickname || 
+                      currentUserData.name || 
+                      userName;
+          }
+        } catch (error) {
+          console.warn('Failed to get user nickname:', error);
         }
-      } catch (expError) {
-        console.error('미니게임 경험치 지급 오류:', expError);
-        // 경험치 지급 실패해도 게임 결과는 정상 표시
+
+        const gameResult: GameResult = {
+          gameId: 'reaction-time',
+          userId: user.uid,
+          userName: userName,
+          score: results.reactionTime,
+          details: results,
+          experienceGained: 0, // Will be calculated separately
+          completedAt: new Date().toISOString(),
+          duration: 30, // Single round duration
+        };
+        
+        const saveSuccess = await saveGameResult(gameResult, isNewPersonalBest);
+        
+        if (saveSuccess) {
+          console.log('Game result saved to Firebase:', gameResult);
+          // Refresh leaderboard after saving result  
+          const leaderboardData = await getGameLeaderboard('reaction-time', 10);
+          setLeaderboard(leaderboardData);
+        }
+
+        // 미니게임 완료시 경험치 지급 (성공한 경우에만)
+        try {
+          // 현재 사용자 데이터 조회
+          const currentUserData = await getUserFromFirestore(user.uid);
+          
+          // 미니게임 완료 경험치 지급
+          const levelUpResult = await giveExpForMiniGameCompletion(
+            user.uid,
+            gameId,
+            results.reactionTime,
+            isNewPersonalBest,
+            currentUserData || undefined
+          );
+          
+          console.log('✅ 미니게임 경험치 지급 완료:', levelUpResult);
+          
+          // 레벨업했다면 레벨업 모달 표시
+          if (levelUpResult.leveledUp) {
+            setLevelUpData({
+              oldLevel: levelUpResult.oldLevel,
+              newLevel: levelUpResult.newLevel,
+              expGained: levelUpResult.expGained,
+              currentExp: levelUpResult.totalExp,
+            });
+            
+            // 결과 페이지가 완전히 로드된 후 모달 표시
+            setTimeout(() => {
+              setShowLevelUpModal(true);
+            }, 1000);
+          } else if (levelUpResult.expGained > 0) {
+            // 레벨업은 없지만 경험치를 획득한 경우 경험치 획득 모달 표시
+            setExpGainData({
+              currentLevel: levelUpResult.newLevel,
+              currentExp: levelUpResult.totalExp,
+              expGained: levelUpResult.expGained,
+            });
+            
+            // 결과 페이지가 완전히 로드된 후 모달 표시
+            setTimeout(() => {
+              setShowExpGainModal(true);
+            }, 1000);
+          }
+        } catch (expError) {
+          console.error('미니게임 경험치 지급 오류:', expError);
+          // 경험치 지급 실패해도 게임 결과는 정상 표시
+        }
+      } else {
+        console.log('Result not saved to Firebase - user not logged in or failed');
       }
       
     } catch (error) {
       console.error('Failed to save game result:', error);
-      Alert.alert('오류', '게임 결과 저장에 실패했습니다.');
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (gameState === 'result' && attempts.length === totalRounds && user) {
+    if (gameState === 'result' && attempts.length === totalRounds) {
       saveResult();
     }
-  }, [gameState, attempts.length, totalRounds, user]);
+  }, [gameState, attempts.length, totalRounds]);
 
   const getGameAreaStyle = () => {
-    const backgroundColor = animatedValue.interpolate({
-      inputRange: [0, 1, 2],
-      outputRange: ['#f3f4f6', '#ef4444', '#22c55e'], // gray -> red -> green
-      extrapolate: 'clamp',
-    });
-
-    return [
-      styles.gameArea,
-      {
-        backgroundColor,
-        transform: [
-          {
-            scale: animatedValue.interpolate({
-              inputRange: [0, 1, 2],
-              outputRange: [1, 0.95, 1.05],
-              extrapolate: 'clamp',
-            }),
-          },
-        ],
-      },
-    ];
+    switch (gameState) {
+      case 'ready':
+        return { backgroundColor: '#f3f4f6' };
+      case 'waiting':
+        return { backgroundColor: '#ef4444' };
+      case 'react':
+        return { backgroundColor: '#22c55e' };
+      case 'too-early':
+        return { backgroundColor: '#dc2626' };
+      default:
+        return { backgroundColor: '#f3f4f6' };
+    }
   };
 
   const getGameAreaText = () => {
     switch (gameState) {
       case 'ready':
-        return `라운드 ${currentRound}/${totalRounds}\n터치하여 시작`;
+        return user?.uid 
+          ? `클릭하여 시작\n(${DAILY_PLAY_LIMIT - dailyPlays}번 남음)`
+          : '클릭하여 시작\n(로그인하면 플레이 기록이 저장됩니다)';
       case 'waiting':
         return '기다리세요...';
       case 'react':
-        return '지금 터치!';
+        return '지금 클릭!';
       case 'too-early':
-        return '너무 빨라요!\n다시 시도하세요';
+        return `너무 빨라요!\n실패\n클릭하여 결과 확인`;
       default:
         return '';
     }
@@ -389,121 +404,124 @@ export default function ReactionTimeGameScreen({ navigation, route }: ReactionTi
     if (!results) return null;
 
     return (
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        {/* Header */}
-        <View style={styles.header}>
-          <TouchableOpacity 
-            style={styles.backButton}
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={styles.backButtonText}>← 뒤로</Text>
-          </TouchableOpacity>
-          
-          <Text style={styles.gameIcon}>⚡</Text>
-          <Text style={styles.headerTitle}>게임 완료!</Text>
-          <Text style={styles.headerSubtitle}>
-            {getRating(results.averageTime)}
-          </Text>
-        </View>
+      <>
+        {/* 레벨업 모달 */}
+        <LevelUpModal
+          isVisible={showLevelUpModal}
+          onClose={() => setShowLevelUpModal(false)}
+          oldLevel={levelUpData.oldLevel}
+          newLevel={levelUpData.newLevel}
+          expGained={levelUpData.expGained}
+          currentExp={levelUpData.currentExp}
+        />
+        
+        {/* 경험치 획득 모달 */}
+        <ExpGainModal
+          isVisible={showExpGainModal}
+          onClose={() => setShowExpGainModal(false)}
+          currentLevel={expGainData.currentLevel}
+          currentExp={expGainData.currentExp}
+          expGained={expGainData.expGained}
+        />
 
-        {/* Results Card */}
-        <View style={styles.resultCard}>
-          <Text style={styles.resultTitle}>게임 결과</Text>
-          
-          <View style={styles.resultsGrid}>
-            <View style={[styles.resultItem, { backgroundColor: '#dbeafe' }]}>
-              <Text style={[styles.resultValue, { color: '#2563eb' }]}>
-                {results.averageTime}ms
-              </Text>
-              <Text style={[styles.resultLabel, { color: '#1d4ed8' }]}>평균 반응시간</Text>
-            </View>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+          {/* Header */}
+          <View style={styles.header}>
+            <TouchableOpacity 
+              style={styles.backButton}
+              onPress={() => navigation.goBack()}
+            >
+              <Text style={styles.backButtonText}>← 게임 목록으로</Text>
+            </TouchableOpacity>
             
-            <View style={[styles.resultItem, { backgroundColor: '#dcfce7' }]}>
-              <Text style={[styles.resultValue, { color: '#16a34a' }]}>
-                {results.bestTime}ms
-              </Text>
-              <Text style={[styles.resultLabel, { color: '#15803d' }]}>최고 기록</Text>
-            </View>
+            <Text style={styles.gameIcon}>⚡</Text>
+            <Text style={styles.headerTitle}>반응속도 게임 완료!</Text>
+            <Text style={styles.headerSubtitle}>
+              {getRating(results.reactionTime)}
+            </Text>
           </View>
 
-          {/* Attempt Details */}
-          <View style={styles.attemptsSection}>
-            <Text style={styles.attemptsTitle}>시도 기록</Text>
-            {attempts.map((attempt, index) => (
-              <View key={index} style={styles.attemptItem}>
-                <Text style={styles.attemptRound}>라운드 {attempt.round}</Text>
-                <Text style={[
-                  styles.attemptTime,
-                  attempt.time === results.bestTime && styles.bestAttemptTime
-                ]}>
-                  {attempt.time}ms
-                  {attempt.time === results.bestTime && ' 🏆'}
+          {/* Results Card */}
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>게임 결과</Text>
+            
+            <View style={styles.resultsGrid}>
+              <View style={[styles.resultItem, { backgroundColor: '#dbeafe' }]}>
+                <Text style={[styles.resultValue, { color: '#2563eb' }]}>
+                  {results.isSuccess ? `${results.reactionTime}ms` : 'FAIL'}
                 </Text>
+                <Text style={[styles.resultLabel, { color: '#1d4ed8' }]}>반응시간</Text>
               </View>
-            ))}
-          </View>
+              
+              <View style={[styles.resultItem, { backgroundColor: '#dcfce7' }]}>
+                <Text style={[styles.resultValue, { color: '#16a34a' }]}>
+                  {bestTime ? `${bestTime}ms` : 'N/A'}
+                </Text>
+                <Text style={[styles.resultLabel, { color: '#15803d' }]}>개인 최고 기록</Text>
+              </View>
+            </View>
 
-          {/* Personal Best */}
-          {bestTime && (
-            <View style={styles.personalBest}>
-              <Text style={styles.personalBestTitle}>
-                개인 최고 기록: {bestTime}ms
-              </Text>
-              {results.bestTime === bestTime && (
-                <Text style={styles.newRecordText}>
+            {/* Personal Best */}
+            {results.isSuccess && results.reactionTime === bestTime && (
+              <View style={styles.personalBest}>
+                <Text style={styles.personalBestTitle}>
                   🎉 새로운 개인 기록 달성!
                 </Text>
-              )}
-            </View>
-          )}
+                <Text style={styles.personalBestSubtext}>
+                  {results.reactionTime}ms
+                </Text>
+              </View>
+            )}
+          </View>
 
-          {/* Experience Points / Login Prompt */}
-          {user ? (
-            <View style={styles.expSection}>
-              <Text style={styles.expText}>
-                💎 +{getScoreFromAverage(results.averageTime) >= 70 ? 10 : 5} EXP 획득!
-              </Text>
-              <Text style={styles.expSubtext}>
-                좋은 기록일수록 더 많은 경험치를 얻어요
-              </Text>
-            </View>
-          ) : (
-            <View style={styles.loginPromptSection}>
-              <Text style={styles.loginPromptTitle}>
-                🔒 게임 기록을 저장하고 경험치를 얻으려면 로그인하세요
-              </Text>
-              <Text style={styles.loginPromptSubtext}>
-                로그인하면 기록 저장, 경험치 획득, 랭킹 참여가 가능해요!
-              </Text>
-              <TouchableOpacity 
-                style={styles.loginPromptButton}
-                onPress={() => navigation.navigate('Login')}
-              >
-                <Text style={styles.loginPromptButtonText}>로그인하러 가기</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        </View>
+          {/* Action Buttons */}
+          <View style={styles.actionButtons}>
+            <TouchableOpacity
+              style={[styles.actionButton, styles.primaryButton]}
+              onPress={resetGame}
+            >
+              <Text style={styles.primaryButtonText}>다시 플레이</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={[styles.actionButton, styles.secondaryButton]}
+              onPress={() => navigation.goBack()}
+            >
+                              <Text style={styles.secondaryButtonText}>게임 목록</Text>
+            </TouchableOpacity>
+          </View>
 
-        {/* Action Buttons */}
-        <View style={styles.actionButtons}>
-          <TouchableOpacity
-            style={[styles.actionButton, styles.primaryButton]}
-            onPress={resetGame}
-          >
-            <Text style={styles.primaryButtonText}>다시 플레이</Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity
-            style={[styles.actionButton, styles.secondaryButton]}
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={styles.secondaryButtonText}>다른 게임 플레이</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.bottomPadding} />
-      </ScrollView>
+          {/* Leaderboard */}
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>🏆 반응속도 게임 랭킹</Text>
+            
+            {leaderboardLoading ? (
+              <Text style={styles.loadingText}>랭킹 로딩 중...</Text>
+            ) : leaderboard.length === 0 ? (
+              <Text style={styles.emptyText}>아직 랭킹 데이터가 없습니다.</Text>
+            ) : (
+              <View>
+                {leaderboard.slice(0, 5).map((entry, index) => (
+                  <View key={entry.userId} style={styles.leaderboardItem}>
+                    <Text style={styles.leaderboardRank}>
+                      {getRankMedal(entry.rank)}
+                    </Text>
+                    <View style={styles.leaderboardInfo}>
+                      <Text style={styles.leaderboardName}>{entry.userName}</Text>
+                      <Text style={styles.leaderboardDate}>
+                        {new Date(entry.completedAt).toLocaleDateString()}
+                      </Text>
+                    </View>
+                    <Text style={styles.leaderboardScore}>
+                      {formatScore(entry.score)}
+                    </Text>
+                  </View>
+                ))}
+              </View>
+            )}
+          </View>
+        </ScrollView>
+      </>
     );
   }
 
@@ -528,111 +546,115 @@ export default function ReactionTimeGameScreen({ navigation, route }: ReactionTi
         expGained={expGainData.expGained}
       />
 
-      <View style={styles.container}>
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
-          <Text style={styles.backButtonText}>← 뒤로</Text>
-        </TouchableOpacity>
-        
-        <Text style={styles.gameIcon}>⚡</Text>
-        <Text style={styles.headerTitle}>
-          {gameData?.title || '반응속도 게임'}
-        </Text>
-        <Text style={styles.headerSubtitle}>
-          초록색으로 바뀌는 순간 빠르게 터치하세요!
-        </Text>
-      </View>
-
-      {/* Game Instructions */}
-      <View style={styles.instructionsCard}>
-        <Text style={styles.instructionsTitle}>게임 방법</Text>
-        <View style={styles.instructionsList}>
-          <View style={styles.instructionItem}>
-            <View style={[styles.instructionBadge, { backgroundColor: '#f3f4f6' }]}>
-              <Text style={styles.instructionNumber}>1</Text>
-            </View>
-            <Text style={styles.instructionText}>아래 영역을 터치하여 게임을 시작하세요</Text>
-          </View>
-          <View style={styles.instructionItem}>
-            <View style={[styles.instructionBadge, { backgroundColor: '#ef4444' }]}>
-              <Text style={[styles.instructionNumber, { color: '#ffffff' }]}>2</Text>
-            </View>
-            <Text style={styles.instructionText}>빨간색일 때는 기다리세요</Text>
-          </View>
-          <View style={styles.instructionItem}>
-            <View style={[styles.instructionBadge, { backgroundColor: '#22c55e' }]}>
-              <Text style={[styles.instructionNumber, { color: '#ffffff' }]}>3</Text>
-            </View>
-            <Text style={styles.instructionText}>초록색으로 바뀌는 순간 빠르게 터치!</Text>
-          </View>
-          <View style={styles.instructionItem}>
-            <View style={[styles.instructionBadge, { backgroundColor: '#3b82f6' }]}>
-              <Text style={[styles.instructionNumber, { color: '#ffffff' }]}>4</Text>
-            </View>
-            <Text style={styles.instructionText}>총 3라운드 진행됩니다</Text>
+        <View style={styles.header}>
+          <TouchableOpacity 
+            style={styles.backButton}
+            onPress={() => navigation.goBack()}
+          >
+            <Text style={styles.backButtonText}>← 게임 목록으로</Text>
+          </TouchableOpacity>
+          
+          <Text style={styles.gameIcon}>⚡</Text>
+          <Text style={styles.headerTitle}>
+            {gameData?.title || '반응속도 게임'}
+          </Text>
+          <Text style={styles.headerSubtitle}>
+            초록색으로 바뀌는 순간 빠르게 터치하세요!
+          </Text>
+          
+          {/* Daily play counter */}
+          <View style={styles.dailyPlayCard}>
+            <Text style={styles.dailyPlayText}>
+              오늘 플레이 횟수: {dailyPlays}/{DAILY_PLAY_LIMIT}
+            </Text>
+            {dailyPlays >= DAILY_PLAY_LIMIT && (
+              <Text style={styles.dailyPlayLimitText}>
+                오늘의 플레이 제한에 도달했습니다. 내일 다시 시도해주세요!
+              </Text>
+            )}
           </View>
         </View>
-      </View>
 
-      {/* Game Area */}
-      <View style={styles.gameCard}>
-        <Text style={styles.roundText}>
-          라운드 {currentRound} / {totalRounds}
-        </Text>
-        
-        <Animated.View style={getGameAreaStyle()}>
+        {/* Game Instructions */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>게임 방법</Text>
+          <Text style={styles.instruction}>1. 아래 영역을 터치하여 게임을 시작하세요</Text>
+          <Text style={styles.instruction}>2. 빨간색일 때는 기다리세요</Text>
+          <Text style={styles.instruction}>3. 초록색으로 바뀌는 순간 빠르게 터치!</Text>
+          <Text style={styles.instruction}>4. 개인 기록을 갱신하면 랭킹에 등록됩니다</Text>
+        </View>
+
+        {/* Game Area */}
+        <View style={styles.card}>
           <TouchableOpacity
-            style={StyleSheet.absoluteFillObject}
-            onPress={gameState === 'ready' ? startGame : handleTouch}
-            activeOpacity={1}
+            style={[
+              styles.gameArea,
+              getGameAreaStyle(),
+              dailyPlays >= DAILY_PLAY_LIMIT && { backgroundColor: '#9ca3af' }
+            ]}
+            onPress={dailyPlays >= DAILY_PLAY_LIMIT ? undefined : (gameState === 'ready' ? startGame : handleTouch)}
+            activeOpacity={0.8}
+            disabled={dailyPlays >= DAILY_PLAY_LIMIT}
           >
-            <View style={styles.gameAreaContent}>
-              <Text style={styles.gameAreaText}>
-                {getGameAreaText()}
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </Animated.View>
-        
-        {currentTime && gameState === 'ready' && (
-          <View style={styles.currentTimeDisplay}>
-            <Text style={styles.currentTimeValue}>
-              {currentTime}ms
+            <Text style={styles.gameAreaText}>
+              {dailyPlays >= DAILY_PLAY_LIMIT ? '오늘의 플레이 완료\n내일 다시 도전하세요!' : getGameAreaText()}
             </Text>
-            <Text style={styles.currentTimeLabel}>이번 시도</Text>
+          </TouchableOpacity>
+          
+          {currentTime && gameState === 'ready' && (
+            <View style={styles.currentTimeDisplay}>
+              <Text style={styles.currentTimeValue}>
+                {currentTime}ms
+              </Text>
+              <Text style={styles.currentTimeLabel}>이번 시도</Text>
+            </View>
+          )}
+        </View>
+
+        {/* Best Record */}
+        {bestTime && (
+          <View style={styles.card}>
+            <Text style={styles.bestRecordTitle}>
+              🏆 개인 최고 기록
+            </Text>
+            <Text style={styles.bestRecordValue}>
+              {bestTime}ms
+            </Text>
           </View>
         )}
-      </View>
 
-      {/* Progress */}
-      {attempts.length > 0 && (
-        <View style={styles.progressCard}>
-          <Text style={styles.progressTitle}>진행 상황</Text>
-          {attempts.map((attempt, index) => (
-            <View key={index} style={styles.progressItem}>
-              <Text style={styles.progressRound}>라운드 {attempt.round}</Text>
-              <Text style={styles.progressTime}>{attempt.time}ms</Text>
+        {/* Leaderboard */}
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>🏆 반응속도 게임 랭킹</Text>
+          
+          {leaderboardLoading ? (
+            <Text style={styles.loadingText}>랭킹 로딩 중...</Text>
+          ) : leaderboard.length === 0 ? (
+            <Text style={styles.emptyText}>아직 랭킹 데이터가 없습니다.</Text>
+          ) : (
+            <View>
+              {leaderboard.slice(0, 5).map((entry, index) => (
+                <View key={entry.userId} style={styles.leaderboardItem}>
+                  <Text style={styles.leaderboardRank}>
+                    {getRankMedal(entry.rank)}
+                  </Text>
+                  <View style={styles.leaderboardInfo}>
+                    <Text style={styles.leaderboardName}>{entry.userName}</Text>
+                    <Text style={styles.leaderboardDate}>
+                      {new Date(entry.completedAt).toLocaleDateString()}
+                    </Text>
+                  </View>
+                  <Text style={styles.leaderboardScore}>
+                    {formatScore(entry.score)}
+                  </Text>
+                </View>
+              ))}
             </View>
-          ))}
+          )}
         </View>
-      )}
-
-      {/* Best Record */}
-      {bestTime && (
-        <View style={styles.bestRecordCard}>
-          <Text style={styles.bestRecordTitle}>
-            🏆 개인 최고 기록
-          </Text>
-          <Text style={styles.bestRecordValue}>
-            {bestTime}ms
-          </Text>
-        </View>
-      )}
-    </View>
+      </ScrollView>
     </>
   );
 }
@@ -640,12 +662,12 @@ export default function ReactionTimeGameScreen({ navigation, route }: ReactionTi
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#f0f4f8',
   },
   header: {
-    paddingHorizontal: 16,
+    paddingHorizontal: 20,
     paddingTop: 60,
-    paddingBottom: 24,
+    paddingBottom: 20,
     alignItems: 'center',
   },
   backButton: {
@@ -674,9 +696,29 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#6b7280',
     textAlign: 'center',
+    marginBottom: 16,
   },
-  instructionsCard: {
-    marginHorizontal: 16,
+  dailyPlayCard: {
+    backgroundColor: '#dbeafe',
+    borderRadius: 12,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#bfdbfe',
+    alignItems: 'center',
+  },
+  dailyPlayText: {
+    fontSize: 16,
+    color: '#1d4ed8',
+    fontWeight: '600',
+  },
+  dailyPlayLimitText: {
+    fontSize: 14,
+    color: '#dc2626',
+    marginTop: 4,
+    textAlign: 'center',
+  },
+  card: {
+    marginHorizontal: 20,
     backgroundColor: '#ffffff',
     borderRadius: 16,
     padding: 20,
@@ -687,75 +729,30 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 4,
   },
-  instructionsTitle: {
+  cardTitle: {
     fontSize: 18,
     fontWeight: 'bold',
     color: '#1f2937',
     marginBottom: 16,
   },
-  instructionsList: {
-    gap: 12,
-  },
-  instructionItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  instructionBadge: {
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginRight: 12,
-  },
-  instructionNumber: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: '#1f2937',
-  },
-  instructionText: {
-    flex: 1,
+  instruction: {
     fontSize: 14,
-    color: '#6b7280',
-  },
-  gameCard: {
-    marginHorizontal: 16,
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
-    alignItems: 'center',
-  },
-  roundText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#1f2937',
-    marginBottom: 16,
+    color: '#4b5563',
+    marginBottom: 8,
   },
   gameArea: {
-    width: width - 80,
     height: 200,
     borderRadius: 16,
-    alignItems: 'center',
     justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 16,
   },
-  gameAreaContent: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   gameAreaText: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#ffffff',
     textAlign: 'center',
-    lineHeight: 24,
+    lineHeight: 28,
   },
   currentTimeDisplay: {
     alignItems: 'center',
@@ -766,87 +763,27 @@ const styles = StyleSheet.create({
     color: '#22c55e',
   },
   currentTimeLabel: {
-    fontSize: 12,
-    color: '#6b7280',
-  },
-  progressCard: {
-    marginHorizontal: 16,
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  progressTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#1f2937',
-    marginBottom: 12,
-  },
-  progressItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 4,
-  },
-  progressRound: {
     fontSize: 14,
     color: '#6b7280',
-  },
-  progressTime: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#3b82f6',
-  },
-  bestRecordCard: {
-    marginHorizontal: 16,
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
-    alignItems: 'center',
+    marginTop: 4,
   },
   bestRecordTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
-    color: '#f59e0b',
+    color: '#eab308',
+    textAlign: 'center',
     marginBottom: 8,
   },
   bestRecordValue: {
-    fontSize: 20,
+    fontSize: 28,
     fontWeight: 'bold',
     color: '#d97706',
-  },
-  resultCard: {
-    marginHorizontal: 16,
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  resultTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#1f2937',
-    marginBottom: 16,
+    textAlign: 'center',
   },
   resultsGrid: {
     flexDirection: 'row',
     gap: 12,
-    marginBottom: 20,
+    marginBottom: 16,
   },
   resultItem: {
     flex: 1,
@@ -857,84 +794,36 @@ const styles = StyleSheet.create({
   resultValue: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  resultLabel: {
-    fontSize: 12,
-    marginTop: 4,
-  },
-  attemptsSection: {
-    marginBottom: 20,
-  },
-  attemptsTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#1f2937',
-    marginBottom: 12,
-  },
-  attemptItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    backgroundColor: '#f9fafb',
-    borderRadius: 8,
     marginBottom: 4,
   },
-  attemptRound: {
+  resultLabel: {
     fontSize: 14,
-    fontWeight: '500',
-    color: '#1f2937',
-  },
-  attemptTime: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#1f2937',
-  },
-  bestAttemptTime: {
-    color: '#22c55e',
   },
   personalBest: {
-    padding: 16,
     backgroundColor: '#fef3c7',
     borderRadius: 12,
-    marginBottom: 20,
+    padding: 16,
     alignItems: 'center',
   },
   personalBestTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#d97706',
+    marginBottom: 4,
   },
-  newRecordText: {
-    fontSize: 12,
-    color: '#f59e0b',
-    marginTop: 4,
-  },
-  expSection: {
-    padding: 16,
-    backgroundColor: '#f3e8ff',
-    borderRadius: 12,
-    alignItems: 'center',
-  },
-  expText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#7c3aed',
-  },
-  expSubtext: {
-    fontSize: 12,
-    color: '#8b5cf6',
-    marginTop: 4,
-    textAlign: 'center',
+  personalBestSubtext: {
+    fontSize: 14,
+    color: '#92400e',
   },
   actionButtons: {
-    paddingHorizontal: 16,
+    flexDirection: 'row',
     gap: 12,
+    marginHorizontal: 20,
+    marginBottom: 16,
   },
   actionButton: {
-    paddingVertical: 16,
-    paddingHorizontal: 24,
+    flex: 1,
+    paddingVertical: 12,
     borderRadius: 12,
     alignItems: 'center',
   },
@@ -942,51 +831,58 @@ const styles = StyleSheet.create({
     backgroundColor: '#3b82f6',
   },
   primaryButtonText: {
+    color: '#ffffff',
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#ffffff',
   },
   secondaryButton: {
     backgroundColor: '#6b7280',
   },
   secondaryButtonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
     color: '#ffffff',
-  },
-  bottomPadding: {
-    height: 40,
-  },
-  loginPromptSection: {
-    padding: 16,
-    backgroundColor: '#fef3c7',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#f59e0b',
-    alignItems: 'center',
-  },
-  loginPromptTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#d97706',
+  },
+  loadingText: {
+    color: '#6b7280',
     textAlign: 'center',
+    paddingVertical: 20,
+  },
+  emptyText: {
+    color: '#6b7280',
+    textAlign: 'center',
+    paddingVertical: 20,
+  },
+  leaderboardItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 12,
+    backgroundColor: '#f9fafb',
     marginBottom: 8,
   },
-  loginPromptSubtext: {
-    fontSize: 12,
-    color: '#f59e0b',
+  leaderboardRank: {
+    fontSize: 20,
+    marginRight: 16,
+    minWidth: 50,
     textAlign: 'center',
-    marginBottom: 12,
   },
-  loginPromptButton: {
-    backgroundColor: '#f59e0b',
-    paddingVertical: 8,
-    paddingHorizontal: 16,
-    borderRadius: 8,
+  leaderboardInfo: {
+    flex: 1,
   },
-  loginPromptButtonText: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#ffffff',
+  leaderboardName: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#1f2937',
+  },
+  leaderboardDate: {
+    fontSize: 12,
+    color: '#6b7280',
+    marginTop: 2,
+  },
+  leaderboardScore: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#3b82f6',
   },
 }); 
