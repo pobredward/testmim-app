@@ -22,6 +22,7 @@ type RootStackParamList = {
   Home: undefined;
   TestDetail: { testCode: string };
   Login: undefined;
+  Games: undefined;
 };
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -321,6 +322,27 @@ export default function HomeScreen() {
         {t('home.description')}
       </Text>
 
+      {/* 미니게임 버튼 */}
+      <TouchableOpacity 
+        style={styles.miniGameCard}
+        onPress={() => navigation.navigate('Games')}
+        activeOpacity={0.8}
+      >
+        <View style={styles.miniGameContent}>
+          <View style={styles.miniGameLeft}>
+            <Text style={styles.miniGameIcon}>🎮</Text>
+            <View style={styles.miniGameTextContainer}>
+              <Text style={styles.miniGameTitle}>미니게임</Text>
+              <Text style={styles.miniGameDescription}>재미있는 게임으로 경험치를 획득하세요!</Text>
+            </View>
+          </View>
+          <View style={styles.miniGameRight}>
+            <Text style={styles.playText}>지금 플레이</Text>
+            <Text style={styles.arrowIcon}>›</Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+
       {CATEGORY_ORDER.map(category => 
         testsByCategory[category]?.length > 0 && (
           <View 
@@ -552,5 +574,63 @@ const styles = StyleSheet.create({
   rightSection: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  miniGameCard: {
+    marginHorizontal: 16,
+    marginBottom: 24,
+    borderRadius: 16,
+    overflow: 'hidden',
+    shadowColor: '#8b5cf6',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 8,
+    elevation: 6,
+  },
+  miniGameContent: {
+    backgroundColor: '#8b5cf6',
+    padding: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  miniGameLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  miniGameIcon: {
+    fontSize: 32,
+    marginRight: 16,
+  },
+  miniGameTextContainer: {
+    flex: 1,
+  },
+  miniGameTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    marginBottom: 4,
+  },
+  miniGameDescription: {
+    fontSize: 14,
+    color: '#e9d5ff',
+    lineHeight: 20,
+  },
+  miniGameRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  playText: {
+    fontSize: 14,
+    color: '#e9d5ff',
+    marginRight: 8,
+  },
+  arrowIcon: {
+    fontSize: 24,
+    color: '#ffffff',
+    fontWeight: 'bold',
   },
 }); 

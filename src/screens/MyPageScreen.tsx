@@ -18,6 +18,8 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SocialAuthService, AuthUser } from '../services/socialAuth';
 import { getUserFromFirestore, updateUserProfile } from '../utils/userAuth';
+import LevelProgressBar from '../components/LevelProgressBar';
+import ExpGuideModal from '../components/ExpGuideModal';
 
 type RootStackParamList = {
   Login: undefined;
@@ -61,11 +63,17 @@ export default function MyPageScreen() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isExpGuideOpen, setIsExpGuideOpen] = useState(false);
+  
+  // 경험치/레벨 상태
+  const [userLevel, setUserLevel] = useState(1);
+  const [userExp, setUserExp] = useState(0);
+  const [expLoading, setExpLoading] = useState(true);
   const [editFormData, setEditFormData] = useState({
     nickname: '',
     bio: '',
     birthDate: '',
-    gender: '' as 'male' | 'female' | 'other' | '',
+    gender: undefined as 'male' | 'female' | 'other' | undefined,
   });
 
   // 사용자 정보 로드
@@ -87,8 +95,14 @@ export default function MyPageScreen() {
           nickname: userData.nickname || '',
           bio: userData.bio || '',
           birthDate: userData.birthDate || '',
-          gender: userData.gender || '',
+          gender: (userData.gender === 'male' || userData.gender === 'female' || userData.gender === 'other') 
+            ? userData.gender 
+            : undefined,
         });
+        
+        // 경험치/레벨 정보 설정
+        setUserLevel(userData.level || 1);
+        setUserExp(userData.exp || 0);
       }
 
       // TODO: 테스트 결과 로드 (현재는 Mock 데이터)
@@ -99,6 +113,7 @@ export default function MyPageScreen() {
       Alert.alert('오류', '사용자 정보를 불러오는 중 오류가 발생했습니다.');
     } finally {
       setLoading(false);
+      setExpLoading(false);
     }
   }, [navigation]);
 
@@ -157,7 +172,7 @@ export default function MyPageScreen() {
         nickname: editFormData.nickname,
         bio: editFormData.bio,
         birthDate: editFormData.birthDate,
-        gender: editFormData.gender,
+        gender: editFormData.gender as 'male' | 'female' | 'other' | undefined,
       } : null);
 
       setIsEditModalOpen(false);
@@ -250,6 +265,28 @@ export default function MyPageScreen() {
             </Text>
           </View>
         </View>
+      </View>
+
+      {/* 레벨 & 경험치 섹션 */}
+      <View style={styles.section}>
+        <View style={styles.sectionHeader}>
+          <Text style={styles.sectionTitle}>레벨 & 경험치</Text>
+          <TouchableOpacity 
+            onPress={() => setIsExpGuideOpen(true)}
+            style={styles.guideButton}
+          >
+            <Text style={styles.guideButtonIcon}>💡</Text>
+            <Text style={styles.guideButtonText}>가이드</Text>
+          </TouchableOpacity>
+        </View>
+        {expLoading ? (
+          <View style={styles.levelLoadingContainer}>
+            <ActivityIndicator size="small" color="#8B5CF6" />
+            <Text style={styles.levelLoadingText}>경험치 정보를 불러오는 중...</Text>
+          </View>
+        ) : (
+          <LevelProgressBar currentExp={userExp} currentLevel={userLevel} />
+        )}
       </View>
 
       {/* 상세 정보 섹션 */}
@@ -420,6 +457,12 @@ export default function MyPageScreen() {
           </ScrollView>
         </View>
       </Modal>
+
+      {/* 경험치 가이드 모달 */}
+      <ExpGuideModal 
+        isVisible={isExpGuideOpen}
+        onClose={() => setIsExpGuideOpen(false)}
+      />
     </ScrollView>
   );
 }
@@ -486,14 +529,15 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   section: {
-    marginBottom: 24,
-    paddingHorizontal: 20,
+    marginBottom: 20,
+    marginHorizontal: 16,
   },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 12,
+    paddingHorizontal: 4,
   },
   sectionTitle: {
     fontSize: 18,
@@ -511,6 +555,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9FAFB',
     padding: 16,
     borderRadius: 12,
+    marginHorizontal: 4,
   },
   profileImage: {
     width: 64,
@@ -585,6 +630,7 @@ const styles = StyleSheet.create({
   emptyResults: {
     alignItems: 'center',
     paddingVertical: 48,
+    marginHorizontal: 4,
   },
   emptyIcon: {
     fontSize: 48,
@@ -620,7 +666,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#DBEAFE',
     padding: 16,
     borderRadius: 12,
-    margin: 20,
+    marginHorizontal: 16,
+    marginBottom: 20,
   },
   infoText: {
     fontSize: 14,
@@ -701,5 +748,37 @@ const styles = StyleSheet.create({
   },
   genderOptionTextSelected: {
     color: '#FFFFFF',
+  },
+  // 레벨/경험치 섹션 스타일
+  levelLoadingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 20,
+    backgroundColor: '#F9FAFB',
+    borderRadius: 12,
+    marginHorizontal: 4,
+  },
+  levelLoadingText: {
+    marginLeft: 8,
+    fontSize: 14,
+    color: '#6B7280',
+  },
+  guideButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F3E8FF',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 20,
+  },
+  guideButtonIcon: {
+    fontSize: 14,
+    marginRight: 4,
+  },
+  guideButtonText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#7C3AED',
   },
 }); 

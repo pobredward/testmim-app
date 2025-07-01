@@ -19,6 +19,10 @@ import { doc, updateDoc, increment } from 'firebase/firestore';
 import * as Sharing from 'expo-sharing';
 import type { TestAnswer, TestResult } from '../types/tests';
 import CommentsSection from '../components/CommentsSection';
+import { giveExpForTestCompletion } from '../utils/expLevel';
+import { SocialAuthService } from '../services/socialAuth';
+import { getUserFromFirestore } from '../utils/userAuth';
+import LevelUpModal from '../components/LevelUpModal';
 
 const { width, height } = Dimensions.get('window');
 
@@ -51,6 +55,15 @@ export default function TestResultScreen() {
   const [loading, setLoading] = useState(true);
   const [sharing, setSharing] = useState(false);
   const resultViewRef = useRef<View>(null);
+  
+  // 레벨업 모달 상태
+  const [showLevelUpModal, setShowLevelUpModal] = useState(false);
+  const [levelUpData, setLevelUpData] = useState({
+    oldLevel: 1,
+    newLevel: 1,
+    expGained: 0,
+    totalExp: 0,
+  });
 
   useEffect(() => {
     loadTestAndCalculateResult();
@@ -83,10 +96,51 @@ export default function TestResultScreen() {
     try {
       const testData = getTestByCode(testCode, i18n.language);
       if (testData) {
+        // 테스트 완료 수 업데이트
         const docRef = doc(db, "testStats", testData.docId);
         await updateDoc(docRef, {
           completions: increment(1)
         });
+
+        // 경험치 지급 (로그인된 사용자만)
+        try {
+          const currentUser = await SocialAuthService.getCurrentUser();
+          if (currentUser?.uid) {
+            // 현재 사용자 데이터 조회
+            const currentUserData = await getUserFromFirestore(currentUser.uid);
+            
+            // 테스트 완료 경험치 지급
+            const levelUpResult = await giveExpForTestCompletion(
+              currentUser.uid, 
+              testCode, 
+              currentUserData || undefined
+            );
+            
+            console.log('✅ 앱에서 경험치 지급 완료:', levelUpResult);
+            
+            // 레벨업했다면 모달 표시
+            if (levelUpResult.leveledUp) {
+              setLevelUpData({
+                oldLevel: levelUpResult.oldLevel,
+                newLevel: levelUpResult.newLevel,
+                expGained: levelUpResult.expGained,
+                totalExp: levelUpResult.totalExp,
+              });
+              
+              // 결과 화면이 완전히 로드된 후 모달 표시
+              setTimeout(() => {
+                setShowLevelUpModal(true);
+              }, 1500);
+            } else if (levelUpResult.expGained > 0) {
+              // 경험치만 획득한 경우 - 간단한 안내만 표시
+              console.log(`📈 경험치 획득: +${levelUpResult.expGained}`);
+              // TODO: 향후 경험치 토스트 알림 추가 가능
+            }
+          }
+        } catch (expError) {
+          console.error('앱에서 경험치 지급 오류:', expError);
+          // 경험치 지급 실패해도 테스트 결과는 정상 표시
+        }
       }
     } catch (error) {
       console.warn('완료 수 업데이트 실패:', error);
@@ -245,6 +299,16 @@ export default function TestResultScreen() {
           currentUserName={null}
         />
       </ScrollView>
+      
+      {/* 레벨업 모달 */}
+      <LevelUpModal
+        isVisible={showLevelUpModal}
+        onClose={() => setShowLevelUpModal(false)}
+        oldLevel={levelUpData.oldLevel}
+        newLevel={levelUpData.newLevel}
+        expGained={levelUpData.expGained}
+        totalExp={levelUpData.totalExp}
+      />
     </SafeAreaView>
   );
 }
